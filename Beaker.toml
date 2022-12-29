@@ -1,4 +1,4 @@
-name = "wasmwasp"
+name = "wasmlab"
 gas_price = '0.025stake'
 account_prefix = 'wasm'
 
