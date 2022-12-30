@@ -72,8 +72,7 @@ pub fn execute_lock(
     )?;
 
     // Get messages for transfering tokens from the sender to the contract
-    let msgs =
-    get_transfer_from_messages(deps.storage, sender, contract_addr, msg.amount.into())?;
+    let msgs = get_transfer_from_messages(deps.storage, sender, contract_addr, msg.amount.into())?;
 
     let res = Response::new().add_messages(msgs);
     Ok(res)
@@ -153,8 +152,7 @@ pub fn execute_confirm_unlock(
     )?;
 
     // Get messages for transfering tokens back to the sender
-    let msgs =
-    get_transfer_messages(deps.storage, sender, total_unlocking.into())?;
+    let msgs = get_transfer_messages(deps.storage, sender, total_unlocking.into())?;
 
     let res = Response::new().add_messages(msgs);
     Ok(res)
@@ -209,7 +207,6 @@ pub fn get_transfer_messages(
         funds: vec![],
     })])
 }
-
 
 /// Handling contract query
 #[cfg_attr(not(feature = "library"), entry_point)]

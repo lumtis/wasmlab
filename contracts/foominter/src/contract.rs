@@ -1,6 +1,9 @@
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
-use cosmwasm_std::{Binary, Deps, DepsMut, Env, MessageInfo, Reply, Response, StdResult, SubMsg, Uint128, to_binary, WasmMsg, Addr};
+use cosmwasm_std::{
+    to_binary, Addr, Binary, Deps, DepsMut, Env, MessageInfo, Reply, Response, StdResult, SubMsg,
+    Uint128, WasmMsg,
+};
 use cw0::parse_reply_instantiate_data;
 use cw2::set_contract_version;
 use cw20::MinterResponse;
@@ -77,9 +80,7 @@ pub fn execute(
     msg: ExecuteMsg,
 ) -> Result<Response, ContractError> {
     match msg {
-        ExecuteMsg::Mint { recipient, amount } => {
-            execute_mint(deps, recipient, amount)
-        }
+        ExecuteMsg::Mint { recipient, amount } => execute_mint(deps, recipient, amount),
     }
 }
 
@@ -109,9 +110,7 @@ fn execute_mint(
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
-        QueryMsg::FooToken {  } => {
-            to_binary(&query_foo_token(deps)?)
-        }
+        QueryMsg::FooToken {} => to_binary(&query_foo_token(deps)?),
     }
 }
 
@@ -141,6 +140,4 @@ pub fn reply(deps: DepsMut, _env: Env, msg: Reply) -> Result<Response, ContractE
         }
         Err(_) => Err(ContractError::InstantiateTokenError {}),
     }
-
-    
 }

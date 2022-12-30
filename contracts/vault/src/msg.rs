@@ -1,7 +1,7 @@
 use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::Addr;
 
-use crate::state::{VaultInfo, UnlockingTokens};
+use crate::state::{UnlockingTokens, VaultInfo};
 
 /// Message type for `instantiate` entry_point
 #[cw_serde]
@@ -47,11 +47,11 @@ pub enum QueryMsg {
 
     /// Returns the locked tokens
     #[returns(LockedResponse)]
-    Locked {addr: Addr},
+    Locked { addr: Addr },
 
     /// Returns the unlocking tokens
     #[returns(UnlockingResponse)]
-    Unlocking {addr: Addr},
+    Unlocking { addr: Addr },
 }
 
 #[cw_serde]
