@@ -1,16 +1,18 @@
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
-use cosmwasm_std::{Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult, to_binary, Addr, CosmosMsg, WasmMsg, Uint128, Storage};
+use cosmwasm_std::{
+    to_binary, Addr, Binary, CosmosMsg, Deps, DepsMut, Env, MessageInfo, Response, StdResult,
+    Storage, Uint128, WasmMsg,
+};
 use cw2::set_contract_version;
 
 use crate::error::ContractError;
-use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg, LockMsg, UnlockMsg, ConfirmUnlockMsg, VaultInfoResponse, LockedResponse, UnlockingResponse};
-
-use crate::state::{
-    VAULT_INFO,
-    LOCKED,
-    UNLOCKING, UnlockingTokens,
+use crate::msg::{
+    ConfirmUnlockMsg, ExecuteMsg, InstantiateMsg, LockMsg, LockedResponse, QueryMsg, UnlockMsg,
+    UnlockingResponse, VaultInfoResponse,
 };
+
+use crate::state::{UnlockingTokens, LOCKED, UNLOCKING, VAULT_INFO};
 
 // version info for migration info
 const CONTRACT_NAME: &str = "crates.io:vault";
@@ -59,14 +61,19 @@ pub fn execute_lock(
     let sender = info.sender.to_string();
     let contract_addr = env.contract.address.to_string();
 
-    // Get messages for transfering tokens from the sender to the contract
-    let msgs = get_transfer_tokens_messages(deps.storage, sender, contract_addr, msg.amount.into())?;
-
     // Add to locked balance
-    LOCKED.update(deps.storage, &info.sender, |locked| -> Result<u128, ContractError> {
-        let locked = locked.unwrap_or_default();
-        Ok(locked + msg.amount)
-    })?;
+    LOCKED.update(
+        deps.storage,
+        &info.sender,
+        |locked| -> Result<u128, ContractError> {
+            let locked = locked.unwrap_or_default();
+            Ok(locked + msg.amount)
+        },
+    )?;
+
+    // Get messages for transfering tokens from the sender to the contract
+    let msgs =
+    get_transfer_from_messages(deps.storage, sender, contract_addr, msg.amount.into())?;
 
     let res = Response::new().add_messages(msgs);
     Ok(res)
@@ -78,28 +85,36 @@ pub fn execute_unlock(
     info: MessageInfo,
     msg: UnlockMsg,
 ) -> Result<Response, ContractError> {
-    let locked = LOCKED.load(deps.storage, &info.sender )?;
-    
+    let locked = LOCKED.load(deps.storage, &info.sender)?;
+
     // Check if locked balance is enough
     if locked < msg.amount {
         return Err(ContractError::InsufficientLockedBalance {});
     }
 
     // Reduce locked balance
-    LOCKED.update(deps.storage, &info.sender, |locked| -> Result<u128, ContractError> {
-        let locked = locked.unwrap_or_default();
-        Ok(locked - msg.amount)
-    })?;
+    LOCKED.update(
+        deps.storage,
+        &info.sender,
+        |locked| -> Result<u128, ContractError> {
+            let locked = locked.unwrap_or_default();
+            Ok(locked - msg.amount)
+        },
+    )?;
 
     // Add to unlocking balance
-    UNLOCKING.update(deps.storage, &info.sender, |unlocking| -> Result<Vec<UnlockingTokens>, ContractError> {
-        let mut unlocking = unlocking.unwrap_or_default();
-        unlocking.push(UnlockingTokens {
-            amount: msg.amount,
-            unlock_start: env.block.time,
-        });
-        Ok(unlocking)
-    })?;
+    UNLOCKING.update(
+        deps.storage,
+        &info.sender,
+        |unlocking| -> Result<Vec<UnlockingTokens>, ContractError> {
+            let mut unlocking = unlocking.unwrap_or_default();
+            unlocking.push(UnlockingTokens {
+                amount: msg.amount,
+                unlock_start: env.block.time,
+            });
+            Ok(unlocking)
+        },
+    )?;
 
     let res = Response::new();
     Ok(res)
@@ -111,23 +126,42 @@ pub fn execute_confirm_unlock(
     info: MessageInfo,
     _msg: ConfirmUnlockMsg,
 ) -> Result<Response, ContractError> {
+    let sender = info.sender.to_string();
+
     // Get the unlock time
     let vault_info = VAULT_INFO.load(deps.storage)?;
     let unlock_time = vault_info.unlock_time;
 
-    // Remove all unlocking tokens that are older than unlock_time
-    UNLOCKING.update(deps.storage, &info.sender, |unlocking| -> Result<Vec<UnlockingTokens>, ContractError> {
-        let mut unlocking = unlocking.unwrap_or_default();
-        unlocking.retain(|x| x.unlock_start.plus_seconds(unlock_time) > env.block.time);
-        Ok(unlocking)
-    })?;
+    let mut total_unlocking = 0;
 
-    let res = Response::new();
+    // Remove all unlocking tokens that are older than unlock_time
+    UNLOCKING.update(
+        deps.storage,
+        &info.sender,
+        |unlocking| -> Result<Vec<UnlockingTokens>, ContractError> {
+            let mut unlocking = unlocking.unwrap_or_default();
+
+            // Calculate total unlocking amount and remove unlocking tokens that are older than unlock_time
+            for token in unlocking.iter() {
+                if token.unlock_start.plus_seconds(unlock_time) < env.block.time {
+                    total_unlocking += token.amount;
+                }
+            }
+            unlocking.retain(|x| x.unlock_start.plus_seconds(unlock_time) > env.block.time);
+            Ok(unlocking)
+        },
+    )?;
+
+    // Get messages for transfering tokens back to the sender
+    let msgs =
+    get_transfer_messages(deps.storage, sender, total_unlocking.into())?;
+
+    let res = Response::new().add_messages(msgs);
     Ok(res)
 }
 
 /// Returns cw20 messages to transfer tokens from an address to another
-pub fn get_transfer_tokens_messages(
+pub fn get_transfer_from_messages(
     storage: &dyn Storage,
     from: String,
     to: String,
@@ -137,12 +171,6 @@ pub fn get_transfer_tokens_messages(
     let vault_info = VAULT_INFO.load(storage)?;
     let contract_addr = vault_info.token.to_string();
 
-    // allowance message
-    let increase_allowance_msg = cw20::Cw20ExecuteMsg::IncreaseAllowance {
-        spender: from.clone(),
-        amount,
-        expires: None,
-    };
     // transfer message
     let transfer_from_msg = cw20::Cw20ExecuteMsg::TransferFrom {
         owner: from.clone(),
@@ -153,24 +181,43 @@ pub fn get_transfer_tokens_messages(
     // return messages
     Ok(vec![CosmosMsg::Wasm(WasmMsg::Execute {
         contract_addr: contract_addr.clone(),
-        msg: to_binary(&increase_allowance_msg)?,
+        msg: to_binary(&transfer_from_msg)?,
         funds: vec![],
-    }),
-    CosmosMsg::Wasm(WasmMsg::Execute {
+    })])
+}
+
+/// Returns cw20 messages to transfer tokens from caller to another
+pub fn get_transfer_messages(
+    storage: &dyn Storage,
+    to: String,
+    amount: Uint128,
+) -> StdResult<Vec<CosmosMsg>> {
+    // get token address from vault info
+    let vault_info = VAULT_INFO.load(storage)?;
+    let contract_addr = vault_info.token.to_string();
+
+    // transfer message
+    let transfer_from_msg = cw20::Cw20ExecuteMsg::Transfer {
+        recipient: to.clone(),
+        amount,
+    };
+
+    // return messages
+    Ok(vec![CosmosMsg::Wasm(WasmMsg::Execute {
         contract_addr: contract_addr.clone(),
         msg: to_binary(&transfer_from_msg)?,
         funds: vec![],
-    })
-    ])
+    })])
 }
+
 
 /// Handling contract query
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(_deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
         QueryMsg::VaultInfo {} => to_binary(&query_vault_info(_deps)?),
-        QueryMsg::Locked {addr} => to_binary(&query_locked(_deps, addr)?),
-        QueryMsg::Unlocking {addr} => to_binary(&query_unlocking(_deps, addr)?),
+        QueryMsg::Locked { addr } => to_binary(&query_locked(_deps, addr)?),
+        QueryMsg::Unlocking { addr } => to_binary(&query_unlocking(_deps, addr)?),
     }
 }
 
@@ -248,7 +295,14 @@ mod test {
         let res = execute_lock(deps.as_mut(), mock_env(), info, msg).unwrap();
         assert_eq!(0, res.messages.len());
 
-        let res = query(deps.as_ref(), mock_env(), QueryMsg::Locked {addr: Addr::unchecked("addr0000")}).unwrap();
+        let res = query(
+            deps.as_ref(),
+            mock_env(),
+            QueryMsg::Locked {
+                addr: Addr::unchecked("addr0000"),
+            },
+        )
+        .unwrap();
         let value: LockedResponse = from_binary(&res).unwrap();
         assert_eq!(value, LockedResponse { locked: 100 });
     }
