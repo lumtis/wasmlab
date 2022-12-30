@@ -1,1 +1,1 @@
-# wasmwasp-sdk
+# wasmlab-sdk
