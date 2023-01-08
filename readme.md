@@ -25,19 +25,19 @@ beaker wasm store-code cw20-base --signer-account test1
 Deploy a mintable token
 
 ```
-beaker wasm deploy foominter --signer-account test1 --no-wasm-opt --raw '{ "token_code_id": 1 }'
+beaker wasm deploy tokenminter --signer-account test1 --no-wasm-opt --raw '{ "name": "foo", "symbol": "FOO", "token_code_id": 1 }'
 ```
 
 Mint some tokens
 
 ```
-beaker wasm execute foominter --raw '{ "mint": {"amount": "10000", "recipient": "wasm13rlrrumq285fwf4sh6celk4vd33m7yyl6yesgd"} }' --signer-account test1
+beaker wasm execute tokenminter --raw '{ "mint": {"amount": "10000", "recipient": "wasm13rlrrumq285fwf4sh6celk4vd33m7yyl6yesgd"} }' --signer-account test1
 ```
 
 Get address token contract
 
 ```
-beaker wasm query  foominter --raw '{"foo_token": {}}'
+beaker wasm query  tokenminter --raw '{"token": {}}'
 ```
 
 Get balance of token

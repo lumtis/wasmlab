@@ -1,5 +1,5 @@
 [package]
-name = "foominter"
+name = "tokenminter"
 version = "0.1.0"
 authors = ["ltacker <lucas.bertrand.22@gmail.com>"]
 edition = "2021"

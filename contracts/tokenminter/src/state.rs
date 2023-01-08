@@ -5,4 +5,4 @@ use cosmwasm_std::Addr;
 
 use cw_storage_plus::Item;
 
-pub const FOO_TOKEN: Item<Addr> = Item::new("foo_token");
+pub const TOKEN: Item<Addr> = Item::new("token");

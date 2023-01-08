@@ -10,10 +10,10 @@ use cw20::MinterResponse;
 
 use crate::error::ContractError;
 use crate::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
-use crate::state::FOO_TOKEN;
+use crate::state::TOKEN;
 
 // version info for migration info
-const CONTRACT_NAME: &str = "crates.io:foominter";
+const CONTRACT_NAME: &str = "crates.io:tokenminter";
 const CONTRACT_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 const INSTANTIATE_TOKEN_REPLY_ID: u64 = 0;
@@ -29,8 +29,8 @@ pub fn instantiate(
     set_contract_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
 
     let instantiate_token_data = &cw20_base::msg::InstantiateMsg {
-        name: "Foo Token".to_string(),
-        symbol: "FOO".to_string(),
+        name: msg.name,
+        symbol: msg.symbol,
         decimals: 6,
         initial_balances: vec![],
         mint: Some(MinterResponse {
@@ -90,7 +90,7 @@ fn execute_mint(
     recipient: String,
     amount: Uint128,
 ) -> Result<Response, ContractError> {
-    let token_address = FOO_TOKEN.load(deps.storage)?;
+    let token_address = TOKEN.load(deps.storage)?;
 
     let mint_token = cw20_base::msg::ExecuteMsg::Mint {
         recipient: recipient.clone(),
@@ -110,13 +110,13 @@ fn execute_mint(
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
-        QueryMsg::FooToken {} => to_binary(&query_foo_token(deps)?),
+        QueryMsg::Token {} => to_binary(&query_token(deps)?),
     }
 }
 
-/// Handle query foo token
-fn query_foo_token(deps: Deps) -> StdResult<Addr> {
-    let token_address = FOO_TOKEN.load(deps.storage)?;
+/// Handle query token
+fn query_token(deps: Deps) -> StdResult<Addr> {
+    let token_address = TOKEN.load(deps.storage)?;
     Ok(token_address)
 }
 
@@ -134,7 +134,7 @@ pub fn reply(deps: DepsMut, _env: Env, msg: Reply) -> Result<Response, ContractE
             let cw20_addr = deps.api.addr_validate(&res.contract_address)?;
 
             // Save gov token
-            FOO_TOKEN.save(deps.storage, &cw20_addr)?;
+            TOKEN.save(deps.storage, &cw20_addr)?;
 
             Ok(Response::new())
         }
