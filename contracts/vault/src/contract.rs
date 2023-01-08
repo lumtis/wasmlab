@@ -12,7 +12,7 @@ use crate::msg::{
     TriggerUnlockMsg, UnlockingResponse, VaultInfoResponse,
 };
 
-use crate::state::{UnlockingTokens, LOCKED, UNLOCKING, VAULT_INFO};
+use crate::state::{UnlockingTokens, VaultInfo, LOCKED, UNLOCKING, VAULT_INFO};
 
 // version info for migration info
 const CONTRACT_NAME: &str = "crates.io:vault";
@@ -58,13 +58,23 @@ pub fn execute_lock(
     info: MessageInfo,
     msg: LockMsg,
 ) -> Result<Response, ContractError> {
-    let sender = info.sender.to_string();
     let contract_addr = env.contract.address.to_string();
+
+    // Check if the sender is the owner
+    let vault_info = VAULT_INFO.load(deps.storage)?;
+    match vault_info.owner {
+        Some(owner) => {
+            if info.sender.cmp(&owner).is_ne() {
+                return Err(ContractError::Unauthorized {});
+            }
+        }
+        None => {}
+    }
 
     // Add to locked balance
     LOCKED.update(
         deps.storage,
-        &info.sender,
+        &msg.addr,
         |locked| -> Result<u128, ContractError> {
             let locked = locked.unwrap_or_default();
             Ok(locked + msg.amount)
@@ -72,7 +82,12 @@ pub fn execute_lock(
     )?;
 
     // Get messages for transfering tokens from the sender to the contract
-    let msgs = get_transfer_from_messages(deps.storage, sender, contract_addr, msg.amount.into())?;
+    let msgs = get_transfer_from_messages(
+        deps.storage,
+        msg.addr.into_string(),
+        contract_addr,
+        msg.amount.into(),
+    )?;
 
     let res = Response::new().add_messages(msgs);
     Ok(res)
@@ -84,7 +99,18 @@ pub fn execute_trigger_unlock(
     info: MessageInfo,
     msg: TriggerUnlockMsg,
 ) -> Result<Response, ContractError> {
-    let locked = LOCKED.load(deps.storage, &info.sender)?;
+    let locked = LOCKED.load(deps.storage, &msg.addr)?;
+
+    // Check if the sender is the owner
+    let vault_info = VAULT_INFO.load(deps.storage)?;
+    match vault_info.owner {
+        Some(owner) => {
+            if info.sender.cmp(&owner).is_ne() {
+                return Err(ContractError::Unauthorized {});
+            }
+        }
+        None => {}
+    }
 
     // Check if locked balance is enough
     if locked < msg.amount {
@@ -94,7 +120,7 @@ pub fn execute_trigger_unlock(
     // Reduce locked balance
     LOCKED.update(
         deps.storage,
-        &info.sender,
+        &msg.addr,
         |locked| -> Result<u128, ContractError> {
             let locked = locked.unwrap_or_default();
             Ok(locked - msg.amount)
@@ -104,7 +130,7 @@ pub fn execute_trigger_unlock(
     // Add to unlocking balance
     UNLOCKING.update(
         deps.storage,
-        &info.sender,
+        &msg.addr,
         |unlocking| -> Result<Vec<UnlockingTokens>, ContractError> {
             let mut unlocking = unlocking.unwrap_or_default();
             unlocking.push(UnlockingTokens {
@@ -152,7 +178,7 @@ pub fn execute_complete_unlock(
     )?;
 
     // Get messages for transfering tokens back to the sender
-    let msgs = get_transfer_messages(deps.storage, sender, total_unlocking.into())?;
+    let msgs = get_transfer_messages(vault_info, sender, total_unlocking.into())?;
 
     let res = Response::new().add_messages(msgs);
     Ok(res)
@@ -186,12 +212,11 @@ pub fn get_transfer_from_messages(
 
 /// Returns cw20 messages to transfer tokens from caller to another
 pub fn get_transfer_messages(
-    storage: &dyn Storage,
+    vault_info: VaultInfo,
     to: String,
     amount: Uint128,
 ) -> StdResult<Vec<CosmosMsg>> {
     // get token address from vault info
-    let vault_info = VAULT_INFO.load(storage)?;
     let contract_addr = vault_info.token.to_string();
 
     // transfer message
@@ -249,6 +274,7 @@ mod test {
             vault_info: VaultInfo {
                 token: Addr::unchecked("owner"),
                 unlock_time: 100,
+                owner: None,
             },
         };
 
@@ -267,6 +293,7 @@ mod test {
                 vault_info: VaultInfo {
                     token: Addr::unchecked("owner"),
                     unlock_time: 100,
+                    owner: None,
                 }
             }
         );
@@ -280,6 +307,7 @@ mod test {
             vault_info: VaultInfo {
                 token: Addr::unchecked("owner"),
                 unlock_time: 100,
+                owner: None,
             },
         };
 
@@ -288,7 +316,10 @@ mod test {
         let _res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
 
         let info = mock_info("addr0000", &coins(1000, "earth"));
-        let msg = LockMsg { amount: 100 };
+        let msg = LockMsg {
+            addr: Addr::unchecked("addr0000"),
+            amount: 100,
+        };
         let res = execute_lock(deps.as_mut(), mock_env(), info, msg).unwrap();
         assert_eq!(0, res.messages.len());
 

@@ -37,7 +37,7 @@ beaker wasm execute tokenminter --raw '{ "mint": {"amount": "10000", "recipient"
 Get address token contract
 
 ```
-beaker wasm query  tokenminter --raw '{"token": {}}'
+beaker wasm query tokenminter --raw '{"token": {}}'
 ```
 
 Get balance of token
@@ -61,7 +61,7 @@ wasmdd tx wasm execute "wasm1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nr
 Lock tokens into vault
 
 ```
-beaker wasm execute vault --raw '{ "lock": {"amount": "2000"} }' --signer-account test1
+beaker wasm execute vault --raw '{ "lock": {"addr": "wasm13rlrrumq285fwf4sh6celk4vd33m7yyl6yesgd", "amount": "2000"} }' --signer-account test1
 ```
 
 Get locked tokens
@@ -73,7 +73,7 @@ beaker wasm query vault --raw '{"locked": {"addr": "wasm13rlrrumq285fwf4sh6celk4
 Start unlocking tokens from vault
 
 ```
-beaker wasm execute vault --raw '{ "trigger_unlock": {"amount": "500"} }' --signer-account test1
+beaker wasm execute vault --raw '{ "trigger_unlock": { "addr": "wasm13rlrrumq285fwf4sh6celk4vd33m7yyl6yesgd", "amount": "500"} }' --signer-account test1
 ```
 
 Get unlocking tokens

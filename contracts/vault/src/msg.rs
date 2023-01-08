@@ -9,19 +9,6 @@ pub struct InstantiateMsg {
     pub vault_info: VaultInfo,
 }
 
-#[cw_serde]
-pub struct LockMsg {
-    pub amount: u128,
-}
-
-#[cw_serde]
-pub struct TriggerUnlockMsg {
-    pub amount: u128,
-}
-
-#[cw_serde]
-pub struct CompleteUnlockMsg {}
-
 /// Message type for `execute` entry_point
 #[cw_serde]
 pub enum ExecuteMsg {
@@ -32,6 +19,21 @@ pub enum ExecuteMsg {
     /// Completes unlocking tokens from the contract after the unlock time has passed
     CompleteUnlock(CompleteUnlockMsg),
 }
+
+#[cw_serde]
+pub struct LockMsg {
+    pub addr: Addr,
+    pub amount: u128,
+}
+
+#[cw_serde]
+pub struct TriggerUnlockMsg {
+    pub addr: Addr,
+    pub amount: u128,
+}
+
+#[cw_serde]
+pub struct CompleteUnlockMsg {}
 
 /// Message type for `migrate` entry_point
 #[cw_serde]

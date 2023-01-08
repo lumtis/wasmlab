@@ -4,8 +4,17 @@ use cw_storage_plus::{Item, Map};
 
 #[cw_serde]
 pub struct VaultInfo {
+    /// The time it takes for tokens to unlock
     pub unlock_time: u64,
+
+    /// The address of the token contract
     pub token: Addr,
+
+    /// The address of the owner of the vault
+    /// This is the address that can trigger locking unlocking tokens
+    /// If this is None, then anyone can trigger locking and unlocking tokens
+    /// None should only be used for testing
+    pub owner: Option<Addr>,
 }
 
 #[cw_serde]
