@@ -15,22 +15,22 @@ pub struct LockMsg {
 }
 
 #[cw_serde]
-pub struct UnlockMsg {
+pub struct TriggerUnlockMsg {
     pub amount: u128,
 }
 
 #[cw_serde]
-pub struct ConfirmUnlockMsg {}
+pub struct CompleteUnlockMsg {}
 
 /// Message type for `execute` entry_point
 #[cw_serde]
 pub enum ExecuteMsg {
     /// Locks tokens in the contract
     Lock(LockMsg),
-    /// Unlocks tokens from the contract    
-    Unlock(UnlockMsg),
-    /// Confirms unlocking tokens from the contract after the unlock time has passed
-    ConfirmUnlock(ConfirmUnlockMsg),
+    /// Triggers the unlock tokens from the contract    
+    TriggerUnlock(TriggerUnlockMsg),
+    /// Completes unlocking tokens from the contract after the unlock time has passed
+    CompleteUnlock(CompleteUnlockMsg),
 }
 
 /// Message type for `migrate` entry_point

@@ -8,8 +8,8 @@ use cw2::set_contract_version;
 
 use crate::error::ContractError;
 use crate::msg::{
-    ConfirmUnlockMsg, ExecuteMsg, InstantiateMsg, LockMsg, LockedResponse, QueryMsg, UnlockMsg,
-    UnlockingResponse, VaultInfoResponse,
+    CompleteUnlockMsg, ExecuteMsg, InstantiateMsg, LockMsg, LockedResponse, QueryMsg,
+    TriggerUnlockMsg, UnlockingResponse, VaultInfoResponse,
 };
 
 use crate::state::{UnlockingTokens, LOCKED, UNLOCKING, VAULT_INFO};
@@ -47,8 +47,8 @@ pub fn execute(
 ) -> Result<Response, ContractError> {
     match msg {
         ExecuteMsg::Lock(msg) => execute_lock(deps, env, info, msg),
-        ExecuteMsg::Unlock(msg) => execute_unlock(deps, env, info, msg),
-        ExecuteMsg::ConfirmUnlock(msg) => execute_confirm_unlock(deps, env, info, msg),
+        ExecuteMsg::TriggerUnlock(msg) => execute_trigger_unlock(deps, env, info, msg),
+        ExecuteMsg::CompleteUnlock(msg) => execute_complete_unlock(deps, env, info, msg),
     }
 }
 
@@ -78,11 +78,11 @@ pub fn execute_lock(
     Ok(res)
 }
 
-pub fn execute_unlock(
+pub fn execute_trigger_unlock(
     deps: DepsMut,
     env: Env,
     info: MessageInfo,
-    msg: UnlockMsg,
+    msg: TriggerUnlockMsg,
 ) -> Result<Response, ContractError> {
     let locked = LOCKED.load(deps.storage, &info.sender)?;
 
@@ -119,11 +119,11 @@ pub fn execute_unlock(
     Ok(res)
 }
 
-pub fn execute_confirm_unlock(
+pub fn execute_complete_unlock(
     deps: DepsMut,
     env: Env,
     info: MessageInfo,
-    _msg: ConfirmUnlockMsg,
+    _msg: CompleteUnlockMsg,
 ) -> Result<Response, ContractError> {
     let sender = info.sender.to_string();
 

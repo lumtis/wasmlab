@@ -73,7 +73,7 @@ beaker wasm query vault --raw '{"locked": {"addr": "wasm13rlrrumq285fwf4sh6celk4
 Start unlocking tokens from vault
 
 ```
-beaker wasm execute vault --raw '{ "unlock": {"amount": "500"} }' --signer-account test1
+beaker wasm execute vault --raw '{ "trigger_unlock": {"amount": "500"} }' --signer-account test1
 ```
 
 Get unlocking tokens
@@ -82,8 +82,8 @@ Get unlocking tokens
 beaker wasm query vault --raw '{"unlocking": {"addr": "wasm13rlrrumq285fwf4sh6celk4vd33m7yyl6yesgd"}}'
 ```
 
-Confirm unlock after unlocking time
+Complete unlock after unlocking time
 
 ```
-beaker wasm execute vault --raw '{ "confirm_unlock": {} }' --signer-account test1
+beaker wasm execute vault --raw '{ "complete_unlock": {} }' --signer-account test1
 ```
