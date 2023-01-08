@@ -12,7 +12,7 @@ use crate::msg::{
     TriggerUnlockMsg, UnlockingResponse, VaultInfoResponse,
 };
 
-use crate::state::{UnlockingTokens, VaultInfo, LOCKED, UNLOCKING, VAULT_INFO};
+use crate::state::{UnlockingTokens, VaultInfo, LOCKED, TOTAL_LOCKED, UNLOCKING, VAULT_INFO};
 
 // version info for migration info
 const CONTRACT_NAME: &str = "crates.io:vault";
@@ -81,6 +81,12 @@ pub fn execute_lock(
         },
     )?;
 
+    // Add to total locked balance
+    TOTAL_LOCKED.update(deps.storage, |locked| -> Result<u128, ContractError> {
+        let locked = locked;
+        Ok(locked + msg.amount)
+    })?;
+
     // Get messages for transfering tokens from the sender to the contract
     let msgs = get_transfer_from_messages(
         deps.storage,
@@ -126,6 +132,12 @@ pub fn execute_trigger_unlock(
             Ok(locked - msg.amount)
         },
     )?;
+
+    // Reduce total locked balance
+    TOTAL_LOCKED.update(deps.storage, |locked| -> Result<u128, ContractError> {
+        let locked = locked;
+        Ok(locked - msg.amount)
+    })?;
 
     // Add to unlocking balance
     UNLOCKING.update(

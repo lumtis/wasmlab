@@ -23,6 +23,14 @@ pub struct UnlockingTokens {
     pub unlock_start: Timestamp,
 }
 
+/// Vault static info
 pub const VAULT_INFO: Item<VaultInfo> = Item::new("vault_info");
+
+/// Total locked tokens
+pub const TOTAL_LOCKED: Item<u128> = Item::new("total_locked");
+
+/// Locked tokens
 pub const LOCKED: Map<&Addr, u128> = Map::new("locked");
+
+/// Unlocking tokens
 pub const UNLOCKING: Map<&Addr, Vec<UnlockingTokens>> = Map::new("unlocking");
