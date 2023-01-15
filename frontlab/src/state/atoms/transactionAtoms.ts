@@ -1,11 +1,11 @@
-import { atom } from 'recoil'
+import { atom } from "recoil";
 
 export enum TransactionStatus {
-  IDLE = '@transaction-status/idle',
-  EXECUTING = '@transaction-status/executing',
+  IDLE = "@transaction-status/idle",
+  EXECUTING = "@transaction-status/executing",
 }
 
 export const transactionStatusState = atom<TransactionStatus>({
-  key: 'transactionState',
+  key: "transactionState",
   default: TransactionStatus.IDLE,
-})
+});

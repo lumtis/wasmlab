@@ -1,5 +1,5 @@
-import { QueryClient } from 'react-query'
-import { DEFAULT_REFETCH_ON_WINDOW_FOCUS_STALE_TIME } from '../util/constants'
+import { QueryClient } from "react-query";
+import { DEFAULT_REFETCH_ON_WINDOW_FOCUS_STALE_TIME } from "../util/constants";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -8,4 +8,4 @@ export const queryClient = new QueryClient({
       staleTime: DEFAULT_REFETCH_ON_WINDOW_FOCUS_STALE_TIME,
     },
   },
-})
+});
