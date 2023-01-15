@@ -13,6 +13,7 @@ import { useRecoilState } from "recoil";
 
 import { walletState, WalletStatusType } from "../state/atoms/walletAtoms";
 import { GAS_PRICE, CHAIN_ID, CHAIN_RPC } from "../util/constants";
+import { chainInfo } from "../util/chaininfo";
 
 export const useConnectWallet = (
   mutationOptions?: Parameters<typeof useMutation>[2]
@@ -28,6 +29,7 @@ export const useConnectWallet = (
     }));
 
     try {
+      await window.keplr.experimentalSuggestChain(chainInfo);
       await window.keplr.enable(CHAIN_ID);
 
       const offlineSigner = await window.getOfflineSignerAuto?.(CHAIN_ID);
