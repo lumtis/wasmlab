@@ -1,6 +1,6 @@
 import { Button, CardBody, CardText } from "reactstrap";
 
-type ConnectedWalletButtonProps = {
+type ButtonConnectProps = {
   walletName?: string;
   onConnect: () => void;
   connected: boolean;
@@ -12,7 +12,7 @@ export const ButtonConnect = ({
   connected,
   walletName,
   ...props
-}: ConnectedWalletButtonProps) => {
+}: ButtonConnectProps) => {
   if (!connected) {
     return (
       <Button className="btn btn-primary" onClick={onConnect}>

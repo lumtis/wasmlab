@@ -4,9 +4,12 @@ import { useRecoilState } from "recoil";
 import { walletState, WalletStatusType } from "./state/atoms/walletAtoms";
 import { useConnectWallet } from "./hooks/useConnectWallet";
 import BalanceAvailable from "./components/BalanceAvailable";
+import ButtonLock from "./components/ButtonLock";
+import { useLock } from "./hooks/useLock";
 
 export const Content = () => {
   const { mutate: connectWallet } = useConnectWallet();
+  const lock = useLock();
   const [{ key, address, status }, setWalletState] =
     useRecoilState(walletState);
 
@@ -18,6 +21,7 @@ export const Content = () => {
         onConnect={() => connectWallet(null)}
       />
       <BalanceAvailable />
+      <ButtonLock onLock={() => lock()} />
     </div>
   );
 };
