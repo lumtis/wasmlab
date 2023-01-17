@@ -69,19 +69,24 @@ rm mnemonic.txt
 Increase allowance for vault
 
 ```
-docker exec -i cosmwasm junod tx wasm execute "juno124x902fdvdcaawkr7njtjtccx94jq5vq4vtw6mhshxlrjqqxezqqyexm8w" '{ "increase_allowance": {"spender": "juno1z3trg3965f75fuvl8fz9957zzk08eedxxnujhyytdxez5ga8tssst33l87", "amount": "100000"} }' --from test1 --chain-id testing -y
+docker exec -i cosmwasm junod tx wasm execute "juno124x902fdvdcaawkr7njtjtccx94jq5vq4vtw6mhshxlrjqqxezqqyexm8w" '{ "increase_allowance": {"spender": "juno1ah5xxylq7rfnrldn0rtvlm77gpfk3jhlq9jq40z573u6dx0awnvqqnz2f5", "amount": "100000"} }' --from test1 --chain-id testing -y
 ```
 
 Lock tokens into vault
 
 ```
 beaker wasm execute vault --raw '{ "lock": {"addr": "juno10j9gpw9t4jsz47qgnkvl5n3zlm2fz72k67rxsg", "amount": "2000"} }' --signer-account test1
+or
+docker exec -i cosmwasm junod tx wasm execute "juno1ah5xxylq7rfnrldn0rtvlm77gpfk3jhlq9jq40z573u6dx0awnvqqnz2f5" '{ "lock": {"addr": "juno10j9gpw9t4jsz47qgnkvl5n3zlm2fz72k67rxsg", "amount": "2000"} }' --from test1 --chain-id testing -y
 ```
 
 Get locked tokens
 
 ```
 beaker wasm query vault --raw '{"locked": {"addr": "juno10j9gpw9t4jsz47qgnkvl5n3zlm2fz72k67rxsg"}}'
+or
+docker exec -i cosmwasm junod q wasm contract-state smart "juno1ah5xxylq7rfnrldn0rtvlm77gpfk3jhlq9jq40z573u6dx0awnvqqnz2f5" '{"locked": {"addr": "juno10j9gpw9t4jsz47qgnkvl5n3zlm2fz72k67rxsg"}}'
+
 ```
 
 Start unlocking tokens from vault
