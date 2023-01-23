@@ -1,0 +1,5 @@
+cw20_base: "11"
+dao_core: "13"
+dao_proposal_single: "14"
+dao_voting_cw20_staked: "15"
+tokenminter: "12"

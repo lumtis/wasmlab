@@ -1,11 +1,14 @@
 import os
-from utils import contracts, store
+from utils import contracts, store, dump_code_ids
 
 wasm_ext = ".wasm"
 
 
 def deploy(contracts):
     root = os.path.expanduser(contracts["root"])
+
+    cwd = os.getcwd()
+    codes = {}
 
     # iterate over projects
     for project in contracts["projects"]:
@@ -24,6 +27,12 @@ def deploy(contracts):
             print(f"⏳ Deploying {contract['name']} code...")
             code_id = store(contract_name + wasm_ext)
             print(f"✅ {contract['name']} code deployed: {code_id}")
+
+            codes[contract_name] = code_id
+
+    # go back to cwd and dump code ids
+    os.chdir(cwd)
+    dump_code_ids(codes)
 
 
 if __name__ == "__main__":

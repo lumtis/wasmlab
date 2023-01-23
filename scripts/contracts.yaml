@@ -22,6 +22,11 @@ projects:
         path: "contracts/proposal/dao-proposal-single/"
       - name: "dao_voting_cw20_staked"
         path: "contracts/voting/dao-voting-cw20-staked/"
+# 1: cw20_base
+# 2: tokenminter
+# 3: dao_core
+# 4: dao_proposal_single
+# 5: dao_voting_cw20_staked
 instances:
   tokens:
     - name: "token minter"
@@ -30,3 +35,13 @@ instances:
         name: "Foo"
         symbol: "FOO"
         token_code_id: 1
+  dao:
+    - name: "core"
+      code: 3
+      msg:
+        name: "mydao"
+        description: "a sample dao"
+        automatically_add_cw20s: true
+        automatically_add_cw721s: true
+        voting_module_instantiate_info: "todo"
+        proposal_modules_instantiate_info: ["todo"]

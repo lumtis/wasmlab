@@ -78,3 +78,8 @@ def contracts():
     with open("contracts.yaml") as file:
         contracts = yaml.safe_load(file)
         return contracts
+
+
+def dump_code_ids(codes):
+    with open("codes.yaml", "w") as file:
+        yaml.dump(codes, file)
