@@ -83,3 +83,11 @@ def contracts():
 def dump_code_ids(codes):
     with open("codes.yaml", "w") as file:
         yaml.dump(codes, file)
+
+
+def dump_contract_addresses(addresses_from_serie, serie):
+    with open("addresses.yaml") as file:
+        addresses = yaml.safe_load(file)
+        addresses[serie] = addresses_from_serie
+        with open("addresses.yaml", "w") as addr_file:
+            yaml.dump(addresses, addr_file)

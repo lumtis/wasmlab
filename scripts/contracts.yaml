@@ -22,14 +22,15 @@ projects:
         path: "contracts/proposal/dao-proposal-single/"
       - name: "dao_voting_cw20_staked"
         path: "contracts/voting/dao-voting-cw20-staked/"
-# 1: cw20_base
-# 2: tokenminter
-# 3: dao_core
-# 4: dao_proposal_single
-# 5: dao_voting_cw20_staked
+messages:
+  voting:
+    token_info:
+      address: "juno182jzjwdyl5fw43yujnlljddgtrkr04dpd30ywp2yn724u7qhtaqsnwt2ks"
+      staking_contract:
+        staking_code_id: 10
 instances:
   tokens:
-    - name: "token minter"
+    - name: "token_minter"
       code: 2
       msg:
         name: "Foo"
@@ -40,8 +41,14 @@ instances:
       code: 3
       msg:
         name: "mydao"
-        description: "a sample dao"
+        description: "sample dao"
         automatically_add_cw20s: true
         automatically_add_cw721s: true
-        voting_module_instantiate_info: "todo"
-        proposal_modules_instantiate_info: ["todo"]
+        voting_module_instantiate_info:
+          code_id: 15
+          msg: "binary"
+          label: "sample voting"
+        proposal_modules_instantiate_info:
+          - code_id: 14
+            msg: "binary"
+            label: "sample voting"
