@@ -1,0 +1,32 @@
+root: "~/Desktop/"
+projects:
+  - name: "cwplus"
+    path: "cw-plus/"
+    bin: "target/wasm32-unknown-unknown/release/"
+    contracts:
+      - name: "cw20_base"
+        path: "contracts/cw20-base/"
+  - name: "wasmlab"
+    path: "wasmlab/"
+    bin: "target/wasm32-unknown-unknown/release/"
+    contracts:
+      - name: "tokenminter"
+        path: "contracts/tokenminter/"
+  - name: "daodao"
+    path: "dao-contracts/"
+    bin: "target/wasm32-unknown-unknown/release/"
+    contracts:
+      - name: "dao_core"
+        path: "contracts/dao-core/"
+      - name: "dao_proposal_single"
+        path: "contracts/proposal/dao-proposal-single/"
+      - name: "dao_voting_cw20_staked"
+        path: "contracts/voting/dao-voting-cw20-staked/"
+instances:
+  tokens:
+    - name: "token minter"
+      code: 2
+      msg:
+        name: "Foo"
+        symbol: "FOO"
+        token_code_id: 1
