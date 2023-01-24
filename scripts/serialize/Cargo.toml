@@ -1,0 +1,8 @@
+[package]
+name = "serialize"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dao-voting-cw20-staked = { git = "https://github.com/DA0-DA0/dao-contracts.git" }
+cosmwasm-std = { version = "1.1", features = ["ibc3"] }

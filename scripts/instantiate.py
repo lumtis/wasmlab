@@ -1,4 +1,3 @@
-import os
 import sys
 from utils import contracts, instantiate_contract, dump_contract_addresses
 

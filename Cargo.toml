@@ -2,6 +2,7 @@
 
 members = [
   'contracts/*',
+  'scripts/*',
 ]
 
 [profile.release]
