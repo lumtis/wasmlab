@@ -2,6 +2,19 @@ import yaml
 import subprocess
 import base64
 import json
+import os
+
+
+def create_contract_query_cmd(address, q):
+    prefix = ["junod", "q", "wasm", "contract-state", "smart"]
+
+    return prefix + [address, q]
+
+
+def contract_query(query):
+    q = json.dumps(query["content"]).replace("null", f'{{}}')
+
+    subprocess.run(create_contract_query_cmd(query["address"], q), check=True)
 
 
 def create_tx_cmd(cmd):
@@ -76,6 +89,13 @@ def compile_wasm():
 def contracts():
     # read contracts.yaml file
     with open("contracts.yaml") as file:
+        contracts = yaml.safe_load(file)
+        return contracts
+
+
+def queries():
+    # read queries.yaml file
+    with open("queries.yaml") as file:
         contracts = yaml.safe_load(file)
         return contracts
 
