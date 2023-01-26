@@ -20,8 +20,12 @@ projects:
         path: "contracts/dao-core/"
       - name: "dao_proposal_single"
         path: "contracts/proposal/dao-proposal-single/"
+      - name: "dao_pre_propose_single"
+        path: "contracts/pre-propose/dao-pre-propose-single/"
       - name: "dao_voting_cw20_staked"
         path: "contracts/voting/dao-voting-cw20-staked/"
+      - name: "cw20_stake"
+        path: "contracts/staking/cw20-stake/"
 instances:
   tokens:
     - name: "token_minter"
@@ -39,10 +43,10 @@ instances:
         automatically_add_cw20s: true
         automatically_add_cw721s: true
         voting_module_instantiate_info:
-          code_id: 15
-          msg: "=="
+          code_id: 6
+          msg: "eyJ0b2tlbl9pbmZvIjp7ImV4aXN0aW5nIjp7ImFkZHJlc3MiOiJqdW5vMXN1aGdmNXN2aHU0dXNydXJ2eHpsZ241NGtzeG1uOGdsamFyanR4cW5hcHY4a2pucDRucnNmOHNtcXciLCJzdGFraW5nX2NvbnRyYWN0Ijp7Im5ldyI6eyJzdGFraW5nX2NvZGVfaWQiOjcsInVuc3Rha2luZ19kdXJhdGlvbiI6bnVsbH19fX0sImFjdGl2ZV90aHJlc2hvbGQiOm51bGx9"
           label: "sample voting"
         proposal_modules_instantiate_info:
-          - code_id: 14
-            msg: "binary"
-            label: "sample voting"
+          - code_id: 4
+            msg: "eyJ0aHJlc2hvbGQiOnsidGhyZXNob2xkX3F1b3J1bSI6eyJ0aHJlc2hvbGQiOnsibWFqb3JpdHkiOnt9fSwicXVvcnVtIjp7InBlcmNlbnQiOiIwLjEifX19LCJtYXhfdm90aW5nX3BlcmlvZCI6eyJ0aW1lIjo0MzIwMDB9LCJtaW5fdm90aW5nX3BlcmlvZCI6bnVsbCwib25seV9tZW1iZXJzX2V4ZWN1dGUiOnRydWUsImFsbG93X3Jldm90aW5nIjpmYWxzZSwicHJlX3Byb3Bvc2VfaW5mbyI6eyJtb2R1bGVfbWF5X3Byb3Bvc2UiOnsiaW5mbyI6eyJjb2RlX2lkIjo1LCJtc2ciOiJleUprWlhCdmMybDBYMmx1Wm04aU9uc2laR1Z1YjIwaU9uc2lkbTkwYVc1blgyMXZaSFZzWlY5MGIydGxiaUk2ZTMxOUxDSmhiVzkxYm5RaU9pSXhNREF3TURBd01EQXdJaXdpY21WbWRXNWtYM0J2YkdsamVTSTZJbTl1YkhsZmNHRnpjMlZrSW4wc0ltOXdaVzVmY0hKdmNHOXpZV3hmYzNWaWJXbHpjMmx2YmlJNlptRnNjMlVzSW1WNGRHVnVjMmx2YmlJNmUzMTkiLCJhZG1pbiI6eyJjb3JlX21vZHVsZSI6e319LCJsYWJlbCI6IkRBTyBEQU8gUHJlLVByb3Bvc2UgTW9kdWxlIn19fSwiY2xvc2VfcHJvcG9zYWxfb25fZXhlY3V0aW9uX2ZhaWx1cmUiOmZhbHNlfQ=="
+            label: "sample propose"

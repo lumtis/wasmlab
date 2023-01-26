@@ -13,7 +13,7 @@ fn main() {
         token_info: dao_voting_cw20_staked::msg::TokenInfo::Existing {
             address: "juno1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrsf8smqw".to_string(),
             staking_contract: dao_voting_cw20_staked::msg::StakingInfo::New {
-                staking_code_id: 10,
+                staking_code_id: 7,
                 unstaking_duration: None,
             },
         },
@@ -32,7 +32,7 @@ fn main() {
         only_members_execute: true,
         pre_propose_info: PreProposeInfo::ModuleMayPropose {
             info: ModuleInstantiateInfo {
-                code_id: 10,
+                code_id: 5,
                 msg: to_binary(&dao_pre_propose_single::InstantiateMsg {
                     deposit_info: Some(UncheckedDepositInfo {
                         denom: DepositToken::VotingModuleToken {},
