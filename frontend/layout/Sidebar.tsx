@@ -1,0 +1,32 @@
+import { Box, Heading, Link } from "@chakra-ui/react";
+
+// Sidebar navigation component with links to index and dao pages using Chakra UI
+const Sidebar = () => {
+  return (
+    <Box
+      as="nav"
+      pos="fixed"
+      left="0"
+      top="0"
+      bottom="0"
+      w="64"
+      bg="black"
+      color="white"
+      overflowY="auto"
+      borderRightWidth={"5px"}
+    >
+      <Box p="4" display="flex" alignItems="center">
+        <Heading size="md" letterSpacing={"tighter"}>
+          <Link href="/">Home</Link>
+        </Heading>
+      </Box>
+      <Box p="4" display="flex" alignItems="center">
+        <Heading size="md" letterSpacing={"tighter"}>
+          <Link href="/dao">DAO</Link>
+        </Heading>
+      </Box>
+    </Box>
+  );
+};
+
+export default Sidebar;
