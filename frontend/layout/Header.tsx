@@ -1,6 +1,8 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Link, Heading } from "@chakra-ui/react";
 import { useChain } from "@cosmos-kit/react";
 import { MouseEventHandler } from "react";
+
+import links from "../config/nav-links";
 
 import {
   Error,
@@ -30,9 +32,36 @@ const Header = () => {
     openView();
   };
 
+  // List of components for the navigation bar
+  const navLinks = links.map((link) => (
+    <Box p="4" display="flex" alignItems="center">
+      <Heading size="md" letterSpacing={"tighter"}>
+        <Link
+          _hover={{
+            color: "primary",
+            textDecoration: "none",
+          }}
+          href={link.href}
+        >
+          {link.label}
+        </Link>
+      </Heading>
+    </Box>
+  ));
+
   // The header contains a string "hello" on the right side of the bar
   return (
     <Box as="header" h="20" bg="black">
+      <Box
+        as="nav"
+        p="4"
+        display="flex"
+        justifyContent="flex-end"
+        float={"left"}
+        paddingLeft="40px"
+      >
+        {navLinks}
+      </Box>
       <Box
         as="nav"
         p="4"

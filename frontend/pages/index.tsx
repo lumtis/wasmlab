@@ -19,7 +19,7 @@ export default function Home() {
             fontWeight="extrabold"
             mb={3}
           >
-            WASMLAB 🧪
+            Welcome to wasmlab 🧪
           </Heading>
         </Box>
       </Container>
