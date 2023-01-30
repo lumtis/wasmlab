@@ -14,18 +14,7 @@ const Sidebar = () => {
       color="white"
       overflowY="auto"
       borderRightWidth={"5px"}
-    >
-      <Box p="4" display="flex" alignItems="center">
-        <Heading size="md" letterSpacing={"tighter"}>
-          <Link href="/">Home</Link>
-        </Heading>
-      </Box>
-      <Box p="4" display="flex" alignItems="center">
-        <Heading size="md" letterSpacing={"tighter"}>
-          <Link href="/dao">DAO</Link>
-        </Heading>
-      </Box>
-    </Box>
+    ></Box>
   );
 };
 

@@ -2,7 +2,7 @@ import { Box, Link, Heading } from "@chakra-ui/react";
 import { useChain } from "@cosmos-kit/react";
 import { MouseEventHandler } from "react";
 
-import links from "../config/nav-links";
+import links from "../config/navlinks";
 
 import {
   Error,
@@ -19,7 +19,7 @@ import { chainName } from "../config";
 
 // Header is a simple empty header with a gray background using Chakra UI
 const Header = () => {
-  const { connect, openView, status, address, chain } = useChain(chainName);
+  const { connect, openView, status, address } = useChain(chainName);
 
   // Events
   const onClickConnect: MouseEventHandler = async (e) => {
@@ -34,7 +34,7 @@ const Header = () => {
 
   // List of components for the navigation bar
   const navLinks = links.map((link) => (
-    <Box p="4" display="flex" alignItems="center">
+    <Box p="4" display="flex" alignItems="center" key={link.key}>
       <Heading size="md" letterSpacing={"tighter"}>
         <Link
           _hover={{
@@ -51,14 +51,13 @@ const Header = () => {
 
   // The header contains a string "hello" on the right side of the bar
   return (
-    <Box as="header" h="20" bg="black">
+    <Box as="header" h="20" bg="black" p="15px">
       <Box
         as="nav"
         p="4"
         display="flex"
         justifyContent="flex-end"
         float={"left"}
-        paddingLeft="40px"
       >
         {navLinks}
       </Box>

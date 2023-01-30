@@ -1,8 +1,10 @@
 import Head from "next/head";
-import { Box, Heading, Container } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 
 import Layout from "../layout/Layout";
 import { DAO } from "../components/dao";
+import BoxW from "../components/ui/box";
+import { addresses } from "../config/addresses";
 
 export default function DAOPage() {
   return (
@@ -11,7 +13,9 @@ export default function DAOPage() {
         <Head>
           <title>DAO</title>
         </Head>
-        <DAO address="juno17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgszu8fr9" />
+        <BoxW width="fit-content">
+          <DAO address={addresses.dao} />
+        </BoxW>
       </Container>
     </Layout>
   );
