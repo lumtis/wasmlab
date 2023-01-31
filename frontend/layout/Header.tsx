@@ -7,7 +7,6 @@ import links from "../config/navlinks";
 import {
   Error,
   Connected,
-  ConnectedShowAddress,
   Connecting,
   CopyAddressBtn,
   Disconnected,
@@ -15,6 +14,7 @@ import {
   Rejected,
   WalletConnectComponent,
 } from "../components";
+import { CopyCard } from "../components/copy-card";
 import { chainName } from "../config";
 
 // Header is a simple empty header with a gray background using Chakra UI
@@ -71,9 +71,7 @@ const Header = () => {
         <Box paddingX="2">
           <CopyAddressBtn
             walletStatus={status}
-            connected={
-              <ConnectedShowAddress address={address} isLoading={false} />
-            }
+            connected={<CopyCard address={address} isLoading={false} />}
           />
         </Box>
         <Box paddingX="2">

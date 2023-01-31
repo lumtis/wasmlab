@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Heading, Box, Container } from "@chakra-ui/react";
+import { Heading, Box, Container, Spinner } from "@chakra-ui/react";
 import { useChain } from "@cosmos-kit/react";
 
 import Layout from "../layout/Layout";
@@ -7,9 +7,17 @@ import { Balance } from "../components/balance";
 import BoxW from "../components/ui/box";
 import { chainName } from "../config";
 import { addresses } from "../config/addresses";
+import { Minter } from "../components/minter";
 
 export default function Home() {
   const { address } = useChain(chainName);
+
+  let BalanceComp = <Spinner />;
+  if (address) {
+    BalanceComp = (
+      <Balance contractAddress={addresses.fooCW20} address={address} />
+    );
+  }
 
   return (
     <Layout>
@@ -29,8 +37,9 @@ export default function Home() {
             Portfolio 💼
           </Heading>
         </Box>
+        <BoxW width="fit-content">{BalanceComp}</BoxW>
         <BoxW width="fit-content">
-          <Balance contractAddress={addresses.fooCW20} address={address} />
+          <Minter contractAddress={addresses.fooMinter} />
         </BoxW>
       </Container>
     </Layout>

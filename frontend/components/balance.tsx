@@ -8,7 +8,7 @@ export const Balance = ({
   address,
 }: {
   contractAddress: string;
-  address?: string;
+  address: string;
 }) => {
   // fetch balance and token info
   const { balance, loading: loadingBalance } = useQueryCW20Balance(
@@ -19,7 +19,7 @@ export const Balance = ({
     useQueryCW20Info(contractAddress);
 
   let balanceComp = <Spinner />;
-  if (!loadingBalance && !loadingTokenInfo) {
+  if (!loadingBalance || !loadingTokenInfo) {
     balanceComp = (
       <Text>
         {tokenInfo?.name}: {balance}
