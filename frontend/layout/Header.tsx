@@ -35,7 +35,7 @@ const Header = () => {
   // List of components for the navigation bar
   const navLinks = links.map((link) => (
     <Box p="4" display="flex" alignItems="center" key={link.key}>
-      <Heading size="md" letterSpacing={"tighter"}>
+      <Heading size="lg" letterSpacing={"tighter"}>
         <Link
           _hover={{
             color: "primary",

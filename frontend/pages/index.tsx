@@ -2,11 +2,12 @@ import Head from "next/head";
 import { Heading, Box, Container } from "@chakra-ui/react";
 
 import Layout from "../layout/Layout";
+import ContainerW from "../components/ui/container";
 
 export default function Home() {
   return (
     <Layout>
-      <Container maxW="5xl" py={10}>
+      <ContainerW>
         <Head>
           <title>WasmLabs</title>
           <meta name="description" content="New blockchain application" />
@@ -22,7 +23,7 @@ export default function Home() {
             Welcome to wasmlab 🧪
           </Heading>
         </Box>
-      </Container>
+      </ContainerW>
     </Layout>
   );
 }

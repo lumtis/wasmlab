@@ -3,7 +3,7 @@ import { extendTheme } from "@chakra-ui/react";
 export const defaultThemeObject = {
   fonts: {
     body: "Inter, system-ui, sans-serif",
-    heading: "Work Sans, system-ui, sans-serif",
+    heading: "VT323, sans-serif",
   },
   colors: {
     primary: "#C724B1",

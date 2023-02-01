@@ -5,6 +5,8 @@ import {
   Input,
   Heading,
   Spinner,
+  Box,
+  Container,
 } from "@chakra-ui/react";
 
 import Button from "./ui/button";
@@ -50,16 +52,14 @@ export const Minter = ({ contractAddress }: { contractAddress: string }) => {
   };
 
   // Submit button is disabled while loading
-  let submitButton = (
-    <Button mt={4}>
-      <Spinner />
-    </Button>
-  );
+  let submitButton = <Spinner />;
   if (!loading) {
     submitButton = (
-      <Button mt={4} type="submit">
-        Mint
-      </Button>
+      <Container display="flex" justifyContent="center" width="100%">
+        <Button mt={4} type="submit">
+          Mint
+        </Button>
+      </Container>
     );
   }
 
@@ -75,14 +75,16 @@ export const Minter = ({ contractAddress }: { contractAddress: string }) => {
     <form onSubmit={handleSubmit}>
       <Heading>Mint</Heading>
       <FormControl>
-        <FormLabel htmlFor="amount">Amount</FormLabel>
-        <Input
-          type="number"
-          id="amount"
-          name="amount"
-          value={amount}
-          onChange={(event: any) => setAmount(event.target.value)}
-        />
+        <Box display="flex" flexDirection="row" alignItems="flex-end">
+          <FormLabel htmlFor="amount">Amount:</FormLabel>
+          <Input
+            type="number"
+            id="amount"
+            name="amount"
+            value={amount}
+            onChange={(event: any) => setAmount(event.target.value)}
+          />
+        </Box>
       </FormControl>
       {submitButton}
       {txComp}

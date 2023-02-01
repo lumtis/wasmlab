@@ -1913,6 +1913,11 @@
     "@ethersproject/bytes" "^5.7.0"
     "@ethersproject/logger" "^5.7.0"
 
+"@fontsource/vt323@^4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@fontsource/vt323/-/vt323-4.5.10.tgz#133e5c7a1878e3d1fb46b5e8ce6a2f85c7f9fb38"
+  integrity sha512-INiL8rWWj/dKZ+oYXPQgdV0OYe6lD3+gsYbPrhHyiJYWlbACSUPbokNXKVrDqRqzXiLj5swKqf9TSJyC7gUGuQ==
+
 "@humanwhocodes/config-array@^0.11.6":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz#03595ac2075a4dc0f191cc2131de14fbd7d410b9"

@@ -1,4 +1,4 @@
-import { Text, Spinner } from "@chakra-ui/react";
+import { Spinner, Box, Heading, Code } from "@chakra-ui/react";
 
 import useQueryCW20Balance from "../hooks/useQueryCW20Balance";
 import useQueryCW20Info from "../hooks/useQueryCW20Info";
@@ -21,10 +21,13 @@ export const Balance = ({
   let balanceComp = <Spinner />;
   if (!loadingBalance || !loadingTokenInfo) {
     balanceComp = (
-      <Text>
-        {tokenInfo?.name}: {balance}
-        {tokenInfo?.symbol}
-      </Text>
+      <Box>
+        <Heading>{tokenInfo?.name} balance</Heading>
+        <Code>
+          {balance}
+          {tokenInfo?.symbol}
+        </Code>
+      </Box>
     );
   }
 

@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "@fontsource/vt323/400.css";
 import type { AppProps } from "next/app";
 import { ChainProvider } from "@cosmos-kit/react";
 import { ChakraProvider } from "@chakra-ui/react";
