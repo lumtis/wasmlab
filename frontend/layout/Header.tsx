@@ -1,4 +1,4 @@
-import { Box, Link, Heading } from "@chakra-ui/react";
+import { Box, Link, Heading, Image } from "@chakra-ui/react";
 import { useChain } from "@cosmos-kit/react";
 import { MouseEventHandler } from "react";
 
@@ -54,11 +54,16 @@ const Header = () => {
     <Box as="header" h="20" bg="black" p="15px">
       <Box
         as="nav"
-        p="4"
+        paddingLeft="4"
         display="flex"
         justifyContent="flex-end"
         float={"left"}
       >
+        <Box p="4" display="flex" alignItems="center">
+          <Link href="/">
+            <Image h="10" src="images/logo.png" alt="logo" />
+          </Link>
+        </Box>
         {navLinks}
       </Box>
       <Box
