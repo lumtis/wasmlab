@@ -11,7 +11,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";
 import React, { useEffect, useState } from "react";
 
-import { CopyAddressType } from "./types";
+import { CopyAddressType } from "../types";
 
 const SIZES = {
   lg: {

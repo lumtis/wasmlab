@@ -14,7 +14,7 @@ import {
   Rejected,
   WalletConnectComponent,
 } from "../components";
-import { CopyCard } from "../components/copy-card";
+import { CopyCard } from "../components/ui/copy-card";
 import { chainName } from "../config";
 
 // Header is a simple empty header with a gray background using Chakra UI

@@ -1,6 +1,6 @@
 import { Text } from "@chakra-ui/react";
 
-import { CopyCard } from "../copy-card";
+import { CopyCard } from "../ui/copy-card";
 
 import ContainerSpaced from "../ui/container-spaced";
 
