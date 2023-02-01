@@ -13,10 +13,17 @@ import ContainerPage from "../components/ui/container-page";
 export default function Home() {
   const { address } = useChain(chainName);
 
-  let BalanceComp = <Spinner />;
+  let BalanceComp,
+    MinterComp = <Spinner />;
   if (address) {
     BalanceComp = (
       <Balance contractAddress={addresses.fooCW20} address={address} />
+    );
+    MinterComp = (
+      <Minter
+        contractAddress={addresses.fooMinter}
+        recipientAddress={address}
+      />
     );
   }
 
@@ -39,9 +46,7 @@ export default function Home() {
           </Heading>
         </Box>
         <BoxW width="fit-content">{BalanceComp}</BoxW>
-        <BoxW width="fit-content">
-          <Minter contractAddress={addresses.fooMinter} />
-        </BoxW>
+        <BoxW width="fit-content">{MinterComp}</BoxW>
       </ContainerPage>
     </Layout>
   );

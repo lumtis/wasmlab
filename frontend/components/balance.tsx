@@ -1,7 +1,7 @@
 import { Spinner, Heading } from "@chakra-ui/react";
 
-import useQueryCW20Balance from "../hooks/useQueryCW20Balance";
-import useQueryCW20Info from "../hooks/useQueryCW20Info";
+import useQueryCW20Balance from "../hooks/query/useQueryCW20Balance";
+import useQueryCW20Info from "../hooks/query/useQueryCW20Info";
 import ContainerSpaced from "./ui/container-spaced";
 
 import Code from "./ui/code";

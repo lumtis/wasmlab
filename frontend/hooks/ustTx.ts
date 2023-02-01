@@ -1,10 +1,16 @@
+import { ExecuteResult } from "@cosmjs/cosmwasm-stargate";
 import { GasPrice } from "@cosmjs/stargate";
 import { useState, useEffect } from "react";
 import { useChain } from "@cosmos-kit/react";
 import { chainName } from "../config";
 import { WalletStatus } from "@cosmos-kit/core";
 
-const useTxTokenMint = (contractAddress: string) => {
+const useTx = (
+  contractAddress: string
+): {
+  send?: (msg: any) => Promise<ExecuteResult>;
+  loading: boolean;
+} => {
   const chain = useChain(chainName);
   const [send, setSend] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -21,13 +27,11 @@ const useTxTokenMint = (contractAddress: string) => {
         if (chain.address) {
           const address = chain.address;
 
-          const sendMint = async (amount: string) => {
+          const sendMint = async (msg: any) => {
             return await client.execute(
               address,
               contractAddress,
-              {
-                mint: { recipient: address, amount },
-              },
+              msg,
               "auto",
               "",
               []
@@ -42,12 +46,7 @@ const useTxTokenMint = (contractAddress: string) => {
     execute();
   }, [contractAddress, chain.status, chain.address]);
 
-  return { send: send, loading: loading };
+  return { send, loading };
 };
 
-export default useTxTokenMint;
-
-// TODO:
-// Find how to correctly implement a hook that returns a promise
-// Remove clients
-// Create general hooks for tx and query
+export default useTx;

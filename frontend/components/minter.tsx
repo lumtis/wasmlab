@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 import Button from "./ui/button";
-import useTxTokenMint from "../hooks/useTxTokenMint";
+import useTxTokenMint from "../hooks/tx/useTxTokenMint";
 import { TxConfirming } from "./tx/tx-confirming";
 import { TxConfirmed } from "./tx/tx-confirmed";
 import ContainerSpaced from "./ui/container-spaced";
@@ -22,8 +22,14 @@ enum TxStatus {
   Confirmed,
 }
 
-export const Minter = ({ contractAddress }: { contractAddress: string }) => {
-  const { send, loading } = useTxTokenMint(contractAddress);
+export const Minter = ({
+  contractAddress,
+  recipientAddress,
+}: {
+  contractAddress: string;
+  recipientAddress: string;
+}) => {
+  const { send, loading } = useTxTokenMint(contractAddress, recipientAddress);
   const [amount, setAmount] = useState("0");
 
   // store the state of the tx compnent
@@ -33,7 +39,7 @@ export const Minter = ({ contractAddress }: { contractAddress: string }) => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    if (amount) {
+    if (amount && send) {
       const amountToSend = amount;
       setAmount("0");
 

@@ -1,23 +1,22 @@
 import { Text, Heading, Spinner } from "@chakra-ui/react";
 
-import useQueryDAOInfo from "../hooks/useQueryDAOInfo";
+import useQueryDAOConfig from "../hooks/query/useQueryDAOConfig";
 import ContainerSpaced from "./ui/container-spaced";
 import { CopyCard } from "./ui/copy-card";
 
 // DAO is a react component that renders DAO information from the address of a DAO contract
 export const DAOConfig = ({ address }: { address: string }) => {
-  const { daoInfo, loading } = useQueryDAOInfo(address);
+  const { daoConfig, loading } = useQueryDAOConfig(address);
 
   if (loading) {
     return <Spinner />;
   }
-  console.log(daoInfo);
 
   return (
     <ContainerSpaced>
-      <Heading>{daoInfo?.name}</Heading>
-      <Text>{daoInfo?.description}</Text>
-      <CopyCard address={daoInfo?.address} />
+      <Heading>{daoConfig?.name}</Heading>
+      <Text>{daoConfig?.description}</Text>
+      <CopyCard address={daoConfig?.address} />
     </ContainerSpaced>
   );
 };
