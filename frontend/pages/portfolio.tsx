@@ -8,7 +8,7 @@ import BoxW from "../components/ui/box";
 import { chainName } from "../config";
 import { addresses } from "../config/addresses";
 import { Minter } from "../components/minter";
-import ContainerW from "../components/ui/container";
+import ContainerPage from "../components/ui/container-page";
 
 export default function Home() {
   const { address } = useChain(chainName);
@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <Layout>
-      <ContainerW>
+      <ContainerPage>
         <Head>
           <title>WasmLabs</title>
           <meta name="description" content="New blockchain application" />
@@ -42,7 +42,7 @@ export default function Home() {
         <BoxW width="fit-content">
           <Minter contractAddress={addresses.fooMinter} />
         </BoxW>
-      </ContainerW>
+      </ContainerPage>
     </Layout>
   );
 }

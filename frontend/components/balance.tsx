@@ -1,7 +1,10 @@
-import { Spinner, Box, Heading, Code } from "@chakra-ui/react";
+import { Spinner, Heading } from "@chakra-ui/react";
 
 import useQueryCW20Balance from "../hooks/useQueryCW20Balance";
 import useQueryCW20Info from "../hooks/useQueryCW20Info";
+import ContainerSpaced from "./ui/container-spaced";
+
+import Code from "./ui/code";
 
 export const Balance = ({
   contractAddress,
@@ -21,13 +24,13 @@ export const Balance = ({
   let balanceComp = <Spinner />;
   if (!loadingBalance || !loadingTokenInfo) {
     balanceComp = (
-      <Box>
+      <ContainerSpaced>
         <Heading>{tokenInfo?.name} balance</Heading>
-        <Code>
+        <Code textAlign="right">
           {balance}
           {tokenInfo?.symbol}
         </Code>
-      </Box>
+      </ContainerSpaced>
     );
   }
 

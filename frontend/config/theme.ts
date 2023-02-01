@@ -1,6 +1,15 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const defaultThemeObject = {
+  // styles: {
+  //   global: {
+  //     code: {
+  //       padding: "2px",
+  //       backgroundColor: "secondarydark",
+  //       color: "white",
+  //     },
+  //   },
+  // },
   fonts: {
     body: "Inter, system-ui, sans-serif",
     heading: "VT323, sans-serif",

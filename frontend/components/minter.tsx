@@ -13,6 +13,7 @@ import Button from "./ui/button";
 import useTxTokenMint from "../hooks/useTxTokenMint";
 import { TxConfirming } from "./tx/tx-confirming";
 import { TxConfirmed } from "./tx/tx-confirmed";
+import ContainerSpaced from "./ui/container-spaced";
 
 // define an enum TxStatus that store the state of the tx, it is either none, confirming or confirmed
 enum TxStatus {
@@ -73,21 +74,23 @@ export const Minter = ({ contractAddress }: { contractAddress: string }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Heading>Mint</Heading>
-      <FormControl>
-        <Box display="flex" flexDirection="row" alignItems="flex-end">
-          <FormLabel htmlFor="amount">Amount:</FormLabel>
-          <Input
-            type="number"
-            id="amount"
-            name="amount"
-            value={amount}
-            onChange={(event: any) => setAmount(event.target.value)}
-          />
-        </Box>
-      </FormControl>
-      {submitButton}
-      {txComp}
+      <ContainerSpaced>
+        <Heading>Mint</Heading>
+        <FormControl>
+          <Box display="flex" flexDirection="row" alignItems="flex-end">
+            <FormLabel htmlFor="amount">Amount:</FormLabel>
+            <Input
+              type="number"
+              id="amount"
+              name="amount"
+              value={amount}
+              onChange={(event: any) => setAmount(event.target.value)}
+            />
+          </Box>
+        </FormControl>
+        {submitButton}
+        {txComp}
+      </ContainerSpaced>
     </form>
   );
 };

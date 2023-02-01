@@ -4,19 +4,19 @@ import Layout from "../layout/Layout";
 import { DAO } from "../components/dao";
 import BoxW from "../components/ui/box";
 import { addresses } from "../config/addresses";
-import ContainerW from "../components/ui/container";
+import ContainerPage from "../components/ui/container-page";
 
 export default function DAOPage() {
   return (
     <Layout>
-      <ContainerW>
+      <ContainerPage>
         <Head>
           <title>DAO</title>
         </Head>
         <BoxW width="fit-content">
           <DAO address={addresses.dao} />
         </BoxW>
-      </ContainerW>
+      </ContainerPage>
     </Layout>
   );
 }

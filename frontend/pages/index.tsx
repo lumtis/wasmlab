@@ -1,13 +1,13 @@
 import Head from "next/head";
-import { Heading, Box, Container } from "@chakra-ui/react";
+import { Heading, Box } from "@chakra-ui/react";
 
 import Layout from "../layout/Layout";
-import ContainerW from "../components/ui/container";
+import ContainerPage from "../components/ui/container-page";
 
 export default function Home() {
   return (
     <Layout>
-      <ContainerW>
+      <ContainerPage>
         <Head>
           <title>WasmLabs</title>
           <meta name="description" content="New blockchain application" />
@@ -23,7 +23,7 @@ export default function Home() {
             Welcome to wasmlab 🧪
           </Heading>
         </Box>
-      </ContainerW>
+      </ContainerPage>
     </Layout>
   );
 }
