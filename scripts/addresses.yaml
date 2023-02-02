@@ -1,4 +1,12 @@
 dao:
-  core: juno1466nf3zuxpya8q9emxukd7vftaf6h4psr0a07srl5zw74zh84yjqqwsffy
+  core:
+    dao: juno17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgszu8fr9
+    proposal_module: juno1kj8q8g2pmhnagmfepp9jh9g2mda7gzd0m5zdq0s08ulvac8ck4dqhnemjt
+    staking_contract: juno13ehuhysn5mqjeaheeuew2gjs785f6k7jm8vfsqg3jhtpkwppcmzq7d63zd
+    token_address: juno1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrsf8smqw
+    update_pre_propose_module: juno1sthrn5ep8ls5vzz8f9gp89khhmedahhdqd244dh9uqzk3hx2pzrsglwy3e
+    voting_module: juno1466nf3zuxpya8q9emxukd7vftaf6h4psr0a07srl5zw74zh84yjqqwsffy
 tokens:
-  token_minter: juno1wug8sewp6cedgkmrmvhl3lf3tulagm9hnvy8p0rppz9yjw0g4wtqwrw37d
+  token_minter:
+    _contract_address: juno1wug8sewp6cedgkmrmvhl3lf3tulagm9hnvy8p0rppz9yjw0g4wtqwrw37d
+    token: juno1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrsf8smqw

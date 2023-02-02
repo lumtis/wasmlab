@@ -135,8 +135,7 @@ pub fn reply(deps: DepsMut, _env: Env, msg: Reply) -> Result<Response, ContractE
 
             // Save gov token
             TOKEN.save(deps.storage, &cw20_addr)?;
-
-            Ok(Response::new())
+            Ok(Response::default().add_attribute("token", cw20_addr))
         }
         Err(_) => Err(ContractError::InstantiateTokenError {}),
     }

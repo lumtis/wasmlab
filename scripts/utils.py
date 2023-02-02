@@ -2,7 +2,6 @@ import yaml
 import subprocess
 import base64
 import json
-import os
 
 
 def create_contract_query_cmd(address, q):
@@ -56,15 +55,17 @@ def store(contract_file):
     return get_code_id_from_response(res)
 
 
-def get_contract_address_from_response(res):
-    # parse response and get contract address
-    for event in res["logs"][0]["events"]:
-        if event["type"] == "reply":
-            for attr in event["attributes"]:
-                if attr["key"] == "_contract_address":
-                    return attr["value"]
+def get_contract_addresses_from_response(res, contract_name_list):
+    addresses = {}
 
-    raise Exception("No contract address found in response")
+    # parse response and get contract addresses from the list of names
+    for event in res["logs"][0]["events"]:
+        if event["type"] == "wasm":
+            for attr in event["attributes"]:
+                if attr["key"] in contract_name_list:
+                    addresses[attr["key"]] = attr["value"]
+
+    return addresses
 
 
 def instantiate_contract(instance):
@@ -76,7 +77,9 @@ def instantiate_contract(instance):
                        stdout=subprocess.PIPE)
     res = yaml.safe_load(p.stdout)
 
-    return get_contract_address_from_response(res)
+    # print(json.dumps(res, indent=4))
+
+    return get_contract_addresses_from_response(res, instance["address_list"])
 
 
 def compile_wasm():

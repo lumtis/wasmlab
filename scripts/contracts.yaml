@@ -34,12 +34,14 @@ instances:
         name: "Foo"
         symbol: "FOO"
         token_code_id: 1
+      address_list: ["_contract_address", "token"]
   dao:
     - name: "core"
       code: 3
       msg:
-        name: "mydao"
-        description: "sample dao"
+        name: "Wasmlab DAO"
+        description: "This is a sample dao for wasmlab. It works with the standard staking-based voting module and the standard propose module."
+        image_url: "https://i.imgur.com/mRpnZeZ.png"
         automatically_add_cw20s: true
         automatically_add_cw721s: true
         voting_module_instantiate_info:
@@ -50,3 +52,12 @@ instances:
           - code_id: 4
             msg: "eyJ0aHJlc2hvbGQiOnsidGhyZXNob2xkX3F1b3J1bSI6eyJ0aHJlc2hvbGQiOnsibWFqb3JpdHkiOnt9fSwicXVvcnVtIjp7InBlcmNlbnQiOiIwLjEifX19LCJtYXhfdm90aW5nX3BlcmlvZCI6eyJ0aW1lIjo0MzIwMDB9LCJtaW5fdm90aW5nX3BlcmlvZCI6bnVsbCwib25seV9tZW1iZXJzX2V4ZWN1dGUiOnRydWUsImFsbG93X3Jldm90aW5nIjpmYWxzZSwicHJlX3Byb3Bvc2VfaW5mbyI6eyJtb2R1bGVfbWF5X3Byb3Bvc2UiOnsiaW5mbyI6eyJjb2RlX2lkIjo1LCJtc2ciOiJleUprWlhCdmMybDBYMmx1Wm04aU9uc2laR1Z1YjIwaU9uc2lkbTkwYVc1blgyMXZaSFZzWlY5MGIydGxiaUk2ZTMxOUxDSmhiVzkxYm5RaU9pSXhNREF3TURBd01EQXdJaXdpY21WbWRXNWtYM0J2YkdsamVTSTZJbTl1YkhsZmNHRnpjMlZrSW4wc0ltOXdaVzVmY0hKdmNHOXpZV3hmYzNWaWJXbHpjMmx2YmlJNlptRnNjMlVzSW1WNGRHVnVjMmx2YmlJNmUzMTkiLCJhZG1pbiI6eyJjb3JlX21vZHVsZSI6e319LCJsYWJlbCI6IkRBTyBEQU8gUHJlLVByb3Bvc2UgTW9kdWxlIn19fSwiY2xvc2VfcHJvcG9zYWxfb25fZXhlY3V0aW9uX2ZhaWx1cmUiOmZhbHNlfQ=="
             label: "sample propose"
+      address_list:
+        [
+          "token_address",
+          "staking_contract",
+          "voting_module",
+          "dao",
+          "proposal_module",
+          "update_pre_propose_module",
+        ]

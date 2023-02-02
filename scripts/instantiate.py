@@ -14,10 +14,13 @@ def instantiate(contracts, serie):
 
         # instantiate contract
         print(f"⏳ Instantiating {instance_name}...")
-        address = instantiate_contract(instance)
-        print(f"✅ {instance_name} instantiated: {address}")
+        new_addresses = instantiate_contract(instance)
 
-        addresses[instance_name] = address
+        # print addresses
+        for name in new_addresses:
+            print(f"✅ {name} instantiated: {new_addresses[name]}")
+
+        addresses[instance_name] = new_addresses
 
     # dump addresses
     dump_contract_addresses(addresses, serie)
