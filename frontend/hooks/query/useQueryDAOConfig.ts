@@ -5,6 +5,7 @@ export type DAOConfig = {
   name: string;
   description: string;
   address: string;
+  image: string;
 };
 
 const useQueryDAOConfig = (address: string) => {
@@ -16,6 +17,7 @@ const useQueryDAOConfig = (address: string) => {
     name: res?.name,
     description: res?.description,
     address: address,
+    image: res?.image_url,
   };
 
   return { daoConfig, loading };

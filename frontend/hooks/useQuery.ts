@@ -23,7 +23,7 @@ const useQuery = (
       setLoading(false);
     };
     fetchBalance();
-  }, [contractAddress, msg]);
+  }, []);
 
   return { res, loading };
 };
