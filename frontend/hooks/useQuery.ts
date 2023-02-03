@@ -14,16 +14,18 @@ const useQuery = (
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBalance = async () => {
-      const client = await chain.getCosmWasmClient();
+    if (contractAddress) {
+      const fetchBalance = async () => {
+        const client = await chain.getCosmWasmClient();
 
-      const queryRes = await client.queryContractSmart(contractAddress, msg);
+        const queryRes = await client.queryContractSmart(contractAddress, msg);
 
-      setRes(queryRes);
-      setLoading(false);
-    };
-    fetchBalance();
-  }, []);
+        setRes(queryRes);
+        setLoading(false);
+      };
+      fetchBalance();
+    }
+  }, [contractAddress]);
 
   return { res, loading };
 };

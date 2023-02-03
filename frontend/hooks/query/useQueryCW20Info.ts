@@ -1,8 +1,3 @@
-import { useState, useEffect } from "react";
-import { useChain } from "@cosmos-kit/react";
-import { chainName } from "../../config";
-import { Cw20baseQueryClient } from "../../clients/cw20base/Cw20base.client";
-
 import useQuery from "../useQuery";
 
 export type TokenInfo = {
