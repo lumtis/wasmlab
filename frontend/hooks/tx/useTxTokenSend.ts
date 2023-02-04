@@ -3,6 +3,7 @@ import { toWasmMsg } from "../../utils/convert";
 
 import useTx from "../ustTx";
 
+// TODO: rename to stake and create another send hook
 const useTxTokenSend = (
   contractAddress: string,
   contractRecipient: string

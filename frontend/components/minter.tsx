@@ -22,6 +22,8 @@ enum TxStatus {
   Confirmed,
 }
 
+// TODO: create a generic component for form with inputs that send txs, make one with single input
+// TODO: improve number input UI
 export const Minter = ({
   contractAddress,
   recipientAddress,

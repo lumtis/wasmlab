@@ -6,6 +6,7 @@ import ContainerSpaced from "./ui/container-spaced";
 
 import Code from "./ui/code";
 
+// TODO: convert number with decimals
 export const Balance = ({
   contractAddress,
   address,
