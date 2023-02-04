@@ -14,7 +14,7 @@ import { TxConfirming } from "./tx/tx-confirming";
 import { TxConfirmed } from "./tx/tx-confirmed";
 import ContainerSpaced from "./ui/container-spaced";
 
-import useTxTokenSend from "../hooks/tx/useTxTokenSend";
+import useTxUnstake from "../hooks/tx/useTxUnstake";
 
 // define an enum TxStatus that store the state of the tx, it is either none, confirming or confirmed
 enum TxStatus {
@@ -23,14 +23,8 @@ enum TxStatus {
   Confirmed,
 }
 
-export const Staker = ({
-  cw20Contract,
-  stakingContract,
-}: {
-  cw20Contract: string;
-  stakingContract: string;
-}) => {
-  const { send, loading } = useTxTokenSend(cw20Contract, stakingContract);
+export const Unstaker = ({ stakingContract }: { stakingContract: string }) => {
+  const { send, loading } = useTxUnstake(stakingContract);
   const [amount, setAmount] = useState("0");
 
   // store the state of the tx compnent
@@ -65,7 +59,7 @@ export const Staker = ({
     submitButton = (
       <Container display="flex" justifyContent="center" width="100%">
         <Button mt={4} type="submit">
-          Stake
+          Unstake
         </Button>
       </Container>
     );
@@ -82,7 +76,7 @@ export const Staker = ({
   return (
     <form onSubmit={handleSubmit}>
       <ContainerSpaced>
-        <Heading fontSize={{ sm: "2xl", md: "3xl" }}>Stake</Heading>
+        <Heading fontSize={{ sm: "2xl", md: "3xl" }}>Unstake</Heading>
         <FormControl>
           <Box display="flex" flexDirection="row" alignItems="flex-end">
             <FormLabel htmlFor="amount">Amount:</FormLabel>
