@@ -26,14 +26,31 @@ projects:
         path: "contracts/voting/dao-voting-cw20-staked/"
       - name: "cw20_stake"
         path: "contracts/staking/cw20-stake/"
+  - name: "astroport"
+    path: "astroport-core/"
+    bin: "target/wasm32-unknown-unknown/release/"
+    contracts:
+      - name: "astroport_whitelist"
+        path: "contracts/whitelist/"
+      - name: "astroport_factory"
+        path: "contracts/factory/"
+      - name: "astroport_pair"
+        path: "contracts/pair/"
 instances:
   tokens:
-    - name: "token_minter"
-      code: 2
+    - name: "foo_minter"
+      code: 26
       msg:
         name: "Foo"
         symbol: "FOO"
-        token_code_id: 1
+        token_code_id: 25
+      address_list: ["_contract_address", "token"]
+    - name: "bar_minter"
+      code: 26
+      msg:
+        name: "Bar"
+        symbol: "BAR"
+        token_code_id: 25
       address_list: ["_contract_address", "token"]
   dao:
     - name: "core"
@@ -61,3 +78,31 @@ instances:
           "proposal_module",
           "update_pre_propose_module",
         ]
+  factory:
+    - name: "factory"
+      code: 33
+      msg:
+        pair_configs:
+          - code_id: 34
+            pair_type:
+              xyk:
+            total_fee_bps: 0
+            maker_fee_bps: 0
+            is_disabled: false
+            is_generator_disabled: true
+        token_code_id: 15
+        owner: "juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y"
+        whitelist_code_id: 32
+      address_list: ["_contract_address"]
+  pair:
+    - name: "pair"
+      code: 34
+      msg:
+        asset_infos:
+          - token:
+              contract_addr: "juno14yay7760nvk8xseqdn9rv5nww6shq7avllzk4nlh6n2mhu77ushqsvrk3l"
+          - token:
+              contract_addr: "juno1cjm8yxdc64ttmunha0pqhae752gewe3stagfj0fhsyerfyen6c0su8jryp"
+        token_code_id: 25
+        factory_addr: "juno1uj6cy6d77275w54cekjaduancv6kc0lcaxecsfwg0g8zqqsn7d9q7equfa"
+      address_list: ["_contract_address"]

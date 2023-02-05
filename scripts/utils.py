@@ -58,18 +58,34 @@ def store(contract_file):
 def get_contract_addresses_from_response(res, contract_name_list):
     addresses = {}
 
+    events = res["logs"][0]["events"]
+
     # parse response and get contract addresses from the list of names
-    for event in res["logs"][0]["events"]:
+    for event in events:
         if event["type"] == "wasm":
             for attr in event["attributes"]:
                 if attr["key"] in contract_name_list:
                     addresses[attr["key"]] = attr["value"]
 
+    # check in instantiate event type if nothing found
+    if len(addresses) == 0:
+        for event in events:
+            if event["type"] == "instantiate":
+                for attr in event["attributes"]:
+                    if attr["key"] in contract_name_list:
+                        addresses[attr["key"]] = attr["value"]
+
     return addresses
+
+
+def format_msg(msg):
+    return msg.replace("null", f'{{}}')
 
 
 def instantiate_contract(instance):
     init_msg = json.dumps(instance["msg"])
+
+    init_msg = format_msg(init_msg)
 
     p = subprocess.run(create_instantiate_cmd(instance["name"],
                                               str(instance["code"]), init_msg),
@@ -78,6 +94,7 @@ def instantiate_contract(instance):
     res = yaml.safe_load(p.stdout)
 
     # print(json.dumps(res, indent=4))
+    # exit(1)
 
     return get_contract_addresses_from_response(res, instance["address_list"])
 

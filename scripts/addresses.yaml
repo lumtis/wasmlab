@@ -6,7 +6,16 @@ dao:
     token_address: juno1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrsf8smqw
     update_pre_propose_module: juno1sthrn5ep8ls5vzz8f9gp89khhmedahhdqd244dh9uqzk3hx2pzrsglwy3e
     voting_module: juno1466nf3zuxpya8q9emxukd7vftaf6h4psr0a07srl5zw74zh84yjqqwsffy
+factory:
+  factory:
+    _contract_address: juno1uj6cy6d77275w54cekjaduancv6kc0lcaxecsfwg0g8zqqsn7d9q7equfa
+pair:
+  pair:
+    _contract_address: juno19l4d4yyf20r98a8a9hjpc938eacdx3wzzm2naa3u29nsjqa9p8ts5pqhv3
 tokens:
-  token_minter:
-    _contract_address: juno1wug8sewp6cedgkmrmvhl3lf3tulagm9hnvy8p0rppz9yjw0g4wtqwrw37d
-    token: juno1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrsf8smqw
+  bar_minter:
+    _contract_address: juno1nypmxpnpags0kyc6a4jv0lywdgqtne67ak9k4pfup7582hen5qlsmnzvsm
+    token: juno1cjm8yxdc64ttmunha0pqhae752gewe3stagfj0fhsyerfyen6c0su8jryp
+  foo_minter:
+    _contract_address: juno1jg932mx0dgccmnzctp56eyfjxsnv9wvr4zdcvn57qsm4t7m54wnsazn8ng
+    token: juno14yay7760nvk8xseqdn9rv5nww6shq7avllzk4nlh6n2mhu77ushqsvrk3l
