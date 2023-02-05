@@ -15,6 +15,9 @@ import { TxConfirmed } from "./tx/tx-confirmed";
 import ContainerSpaced from "./ui/container-spaced";
 
 import useTxUnstake from "../hooks/tx/useTxUnstake";
+import useQueryStakingConfig from "../hooks/query/useQueryStakingConfig";
+import useQueryCW20Info from "../hooks/query/useQueryCW20Info";
+import { convertDenomToMicroDenom } from "../utils/conversion";
 
 // define an enum TxStatus that store the state of the tx, it is either none, confirming or confirmed
 enum TxStatus {
@@ -24,6 +27,11 @@ enum TxStatus {
 }
 
 export const Unstaker = ({ stakingContract }: { stakingContract: string }) => {
+  const { stakingConfig } = useQueryStakingConfig(stakingContract);
+  const { tokenInfo, loading: loadingTokenInfo } = useQueryCW20Info(
+    stakingConfig?.token_address || ""
+  );
+
   const { send, loading } = useTxUnstake(stakingContract);
   const [amount, setAmount] = useState("0");
 
@@ -43,9 +51,15 @@ export const Unstaker = ({ stakingContract }: { stakingContract: string }) => {
         return;
       }
 
+      // Convert to microdenom
+      const microDenom = convertDenomToMicroDenom(
+        amountToSend,
+        tokenInfo?.decimals
+      );
+
       // Send tx
       setTxStatus(TxStatus.Confirming);
-      const res = await send(amountToSend);
+      const res = await send(microDenom);
 
       // Set tx hash
       setTxStatus(TxStatus.Confirmed);
@@ -55,7 +69,7 @@ export const Unstaker = ({ stakingContract }: { stakingContract: string }) => {
 
   // Submit button is disabled while loading
   let submitButton = <Spinner />;
-  if (!loading) {
+  if (!loading && !loadingTokenInfo) {
     submitButton = (
       <Container display="flex" justifyContent="center" width="100%">
         <Button mt={4} type="submit">

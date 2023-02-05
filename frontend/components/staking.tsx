@@ -5,14 +5,11 @@ import { Staked } from "./staked";
 import { Staker } from "./staker";
 import { Unstaker } from "./unstaker";
 
-// TODO: remove cw20Contract and fetch it from the staking contract inside the staker component
 export const Staking = ({
   stakingContract,
-  cw20Contract,
   address,
 }: {
   stakingContract: string;
-  cw20Contract: string;
   address?: string;
 }) => {
   if (!address) {
@@ -22,7 +19,7 @@ export const Staking = ({
     <ContainerSpaced>
       <Heading fontSize={{ sm: "3xl", md: "4xl" }}>Staking</Heading>
       <Staked contractAddress={stakingContract} address={address} />
-      <Staker stakingContract={stakingContract} cw20Contract={cw20Contract} />\
+      <Staker stakingContract={stakingContract} />\
       <Unstaker stakingContract={stakingContract} />
     </ContainerSpaced>
   );

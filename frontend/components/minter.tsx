@@ -14,6 +14,10 @@ import useTxTokenMint from "../hooks/tx/useTxTokenMint";
 import { TxConfirming } from "./tx/tx-confirming";
 import { TxConfirmed } from "./tx/tx-confirmed";
 import ContainerSpaced from "./ui/container-spaced";
+import useQueryMinterToken from "../hooks/query/useQueryMinterToken";
+import useQueryCW20Info from "../hooks/query/useQueryCW20Info";
+
+import { convertDenomToMicroDenom } from "../utils/conversion";
 
 // define an enum TxStatus that store the state of the tx, it is either none, confirming or confirmed
 enum TxStatus {
@@ -22,8 +26,8 @@ enum TxStatus {
   Confirmed,
 }
 
-// TODO: create a generic component for form with inputs that send txs, make one with single input
-// TODO: improve number input UI
+// TODOHERE: create a generic component for form with inputs that send txs, make one with single input
+// TODOHERE: improve number input UI
 export const Minter = ({
   contractAddress,
   recipientAddress,
@@ -33,6 +37,12 @@ export const Minter = ({
 }) => {
   const { send, loading } = useTxTokenMint(contractAddress, recipientAddress);
   const [amount, setAmount] = useState("0");
+
+  // fetch the token contract of the minter and its info
+  const { token: tokenAddress } = useQueryMinterToken(contractAddress);
+  const { tokenInfo, loading: loadingTokenInfo } = useQueryCW20Info(
+    tokenAddress || ""
+  );
 
   // store the state of the tx compnent
   const [txStatus, setTxStatus] = useState<TxStatus>(TxStatus.None);
@@ -50,9 +60,15 @@ export const Minter = ({
         return;
       }
 
+      // Convert to microdenom
+      const microDenom = convertDenomToMicroDenom(
+        amountToSend,
+        tokenInfo?.decimals
+      );
+
       // Send tx
       setTxStatus(TxStatus.Confirming);
-      const res = await send(amountToSend);
+      const res = await send(microDenom);
 
       // Set tx hash
       setTxStatus(TxStatus.Confirmed);
@@ -62,7 +78,7 @@ export const Minter = ({
 
   // Submit button is disabled while loading
   let submitButton = <Spinner />;
-  if (!loading) {
+  if (!loading && !loadingTokenInfo) {
     submitButton = (
       <Container display="flex" justifyContent="center" width="100%">
         <Button mt={4} type="submit">
@@ -83,7 +99,7 @@ export const Minter = ({
   return (
     <form onSubmit={handleSubmit}>
       <ContainerSpaced>
-        <Heading>Mint</Heading>
+        <Heading>Mint {tokenInfo?.symbol}</Heading>
         <FormControl>
           <Box display="flex" flexDirection="row" alignItems="flex-end">
             <FormLabel htmlFor="amount">Amount:</FormLabel>

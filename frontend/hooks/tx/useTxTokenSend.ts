@@ -1,9 +1,9 @@
 import { ExecuteResult } from "@cosmjs/cosmwasm-stargate";
-import { toWasmMsg } from "../../utils/convert";
+import { toWasmMsg } from "../../utils/conversion";
 
 import useTx from "../ustTx";
 
-// TODO: rename to stake and create another send hook
+// TODOHERE: rename to stake and create another send hook
 const useTxTokenSend = (
   contractAddress: string,
   contractRecipient: string

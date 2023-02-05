@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 
-// TODO: implement regular footer
+// TODOHERE: implement regular footer
 const Footer = () => {
   return (
     <Box

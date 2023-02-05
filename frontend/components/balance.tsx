@@ -3,10 +3,9 @@ import { Spinner, Heading } from "@chakra-ui/react";
 import useQueryCW20Balance from "../hooks/query/useQueryCW20Balance";
 import useQueryCW20Info from "../hooks/query/useQueryCW20Info";
 import ContainerSpaced from "./ui/container-spaced";
-
 import Code from "./ui/code";
+import { convertMicroDenomToDenom } from "../utils/conversion";
 
-// TODO: convert number with decimals
 export const Balance = ({
   contractAddress,
   address,
@@ -22,13 +21,15 @@ export const Balance = ({
   const { tokenInfo, loading: loadingTokenInfo } =
     useQueryCW20Info(contractAddress);
 
+  tokenInfo.decimals;
+
   let balanceComp = <Spinner />;
   if (!loadingBalance || !loadingTokenInfo) {
     balanceComp = (
       <ContainerSpaced>
         <Heading>{tokenInfo?.name} balance</Heading>
         <Code textAlign="right">
-          {balance}
+          {convertMicroDenomToDenom(balance, tokenInfo?.decimals)}
           {tokenInfo?.symbol}
         </Code>
       </ContainerSpaced>

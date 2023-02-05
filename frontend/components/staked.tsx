@@ -4,7 +4,9 @@ import ContainerSpaced from "./ui/container-spaced";
 import Code from "./ui/code";
 
 import useQueryStakedValue from "../hooks/query/useQueryStakedValue";
-import useGetStakingDenom from "../hooks/useGetStakingDenom";
+import useGetStakingTokenInfo from "../hooks/useGetStakingTokenInfo";
+
+import { convertMicroDenomToDenom } from "../utils/conversion";
 
 export const Staked = ({
   contractAddress,
@@ -18,7 +20,11 @@ export const Staked = ({
     contractAddress,
     address
   );
-  const { denom, loading: loadingDenom } = useGetStakingDenom(contractAddress);
+  const { tokenInfo, loading: loadingDenom } =
+    useGetStakingTokenInfo(contractAddress);
+
+  // convert staked from decimal
+  const stakedConv = convertMicroDenomToDenom(staked, tokenInfo?.decimals);
 
   let stakedComp = <Spinner />;
   if (!loadingStaked || !loadingDenom) {
@@ -26,8 +32,8 @@ export const Staked = ({
       <ContainerSpaced>
         <Heading fontSize={{ sm: "2xl", md: "3xl" }}>Staked</Heading>
         <Code textAlign="right">
-          {staked}
-          {denom}
+          {stakedConv}
+          {tokenInfo?.symbol}
         </Code>
       </ContainerSpaced>
     );

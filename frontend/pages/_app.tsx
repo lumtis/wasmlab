@@ -24,8 +24,8 @@ function CreateCosmosApp({ Component, pageProps }: AppProps) {
     },
   };
 
-  // TODO : add more comments
-  // TODO: correctly manage blck background
+  // TODOHERE : add more comments
+  // TODOHERE: correctly manage blck background
   return (
     <ChakraProvider theme={defaultTheme}>
       <ChainProvider

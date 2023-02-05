@@ -33,11 +33,7 @@ export default function DAOPage() {
           <DAOConfig address={addresses.dao} />
         </BoxW>
         <BoxW width="fit-content">
-          <Staking
-            cw20Contract={addresses.fooCW20}
-            stakingContract={addresses.staking}
-            address={address}
-          />
+          <Staking stakingContract={addresses.staking} address={address} />
         </BoxW>
       </ContainerPage>
     </Layout>

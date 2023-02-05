@@ -2,7 +2,7 @@ import { ExecuteResult } from "@cosmjs/cosmwasm-stargate";
 
 import useTx from "../ustTx";
 
-// TODO: Factorize tx hook bodies
+// TODOHERE: Factorize tx hook bodies
 const useTxTokenMint = (
   contractAddress: string,
   recipient: string

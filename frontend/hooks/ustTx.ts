@@ -16,34 +16,36 @@ const useTx = (
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const execute = async () => {
-      if (chain.status == WalletStatus.Connected) {
-        const client = await chain.getSigningCosmWasmClient();
+    if (contractAddress) {
+      const execute = async () => {
+        if (chain.status == WalletStatus.Connected) {
+          const client = await chain.getSigningCosmWasmClient();
 
-        // TODO: gas price should be set from ChainProvider SignerOption
-        // Fix setting SignerOption and remove this line
-        client.gasPrice = GasPrice.fromString("0.025ujunox");
+          // TODOHERE: gas price should be set from ChainProvider SignerOption
+          // Fix setting SignerOption and remove this line
+          client.gasPrice = GasPrice.fromString("0.025ujunox");
 
-        if (chain.address) {
-          const address = chain.address;
+          if (chain.address) {
+            const address = chain.address;
 
-          const sendMint = async (msg: any) => {
-            return await client.execute(
-              address,
-              contractAddress,
-              msg,
-              "auto",
-              "",
-              []
-            );
-          };
+            const sendMint = async (msg: any) => {
+              return await client.execute(
+                address,
+                contractAddress,
+                msg,
+                "auto",
+                "",
+                []
+              );
+            };
 
-          setLoading(false);
-          setSend(() => sendMint);
+            setLoading(false);
+            setSend(() => sendMint);
+          }
         }
-      }
-    };
-    execute();
+      };
+      execute();
+    }
   }, [contractAddress, chain.status, chain.address]);
 
   return { send, loading };

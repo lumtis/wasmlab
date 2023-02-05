@@ -1,17 +1,16 @@
 import useQueryStakingConfig from "./query/useQueryStakingConfig";
-import useQueryCW20Info from "./query/useQueryCW20Info";
+import useQueryCW20Info, { TokenInfo } from "./query/useQueryCW20Info";
 
-const useGetStakingDenom = (
+const useGetStakingTokenInfo = (
   contractAddress: string
 ): {
-  denom: string;
+  tokenInfo: TokenInfo;
   loading: boolean;
 } => {
   const { stakingConfig } = useQueryStakingConfig(contractAddress);
   const { tokenInfo, loading } = useQueryCW20Info(stakingConfig?.token_address);
-  const denom = tokenInfo?.symbol;
 
-  return { denom, loading };
+  return { tokenInfo, loading };
 };
 
-export default useGetStakingDenom;
+export default useGetStakingTokenInfo;

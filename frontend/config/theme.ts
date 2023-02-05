@@ -1,7 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const defaultThemeObject = {
-  // TODO: investigate why this doesn't work
+  // TODOHERE: investigate why this doesn't work
   // styles: {
   //   global: {
   //     code: {
