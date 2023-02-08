@@ -1,21 +1,21 @@
 dao:
   core:
-    dao: juno17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgszu8fr9
-    proposal_module: juno1kj8q8g2pmhnagmfepp9jh9g2mda7gzd0m5zdq0s08ulvac8ck4dqhnemjt
-    staking_contract: juno13ehuhysn5mqjeaheeuew2gjs785f6k7jm8vfsqg3jhtpkwppcmzq7d63zd
+    dao: juno1qwlgtx52gsdu7dtp0cekka5zehdl0uj3fhp9acg325fvgs8jdzks9z8n5r
+    proposal_module: juno1ery8l6jquynn9a4cz2pff6khg8c68f7urt33l5n9dng2cwzz4c4q5q5gw3
+    staking_contract: juno10qt8wg0n7z740ssvf3urmvgtjhxpyp74hxqvqt7z226gykuus7eqs24840
     token_address: juno1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrsf8smqw
-    update_pre_propose_module: juno1sthrn5ep8ls5vzz8f9gp89khhmedahhdqd244dh9uqzk3hx2pzrsglwy3e
-    voting_module: juno1466nf3zuxpya8q9emxukd7vftaf6h4psr0a07srl5zw74zh84yjqqwsffy
+    update_pre_propose_module: juno18a2u6az6dzw528rptepfg6n49ak6hdzkf8ewf0n5r0nwju7gtdgq0vvvn8
+    voting_module: juno1pvrwmjuusn9wh34j7y520g8gumuy9xtl3gvprlljfdpwju3x7ucssml9ug
 factory:
   factory:
-    _contract_address: juno1uj6cy6d77275w54cekjaduancv6kc0lcaxecsfwg0g8zqqsn7d9q7equfa
+    _contract_address: juno1g6kht9c5s4jwn4akfjt3zmsfh4nvguewaegjeavpz3f0q9uylrqswg7lxy
 pair:
   pair:
-    _contract_address: juno19l4d4yyf20r98a8a9hjpc938eacdx3wzzm2naa3u29nsjqa9p8ts5pqhv3
+    _contract_address: juno1x22q8lfhz7qcvtzs0dakhgx2th64l79kepjujhhxk5x804taeqlquj74u4
 tokens:
   bar_minter:
-    _contract_address: juno1nypmxpnpags0kyc6a4jv0lywdgqtne67ak9k4pfup7582hen5qlsmnzvsm
-    token: juno1cjm8yxdc64ttmunha0pqhae752gewe3stagfj0fhsyerfyen6c0su8jryp
+    _contract_address: juno1xr3rq8yvd7qplsw5yx90ftsr2zdhg4e9z60h5duusgxpv72hud3skqksyr
+    token: juno1yw4xvtc43me9scqfr2jr2gzvcxd3a9y4eq7gaukreugw2yd2f8ts9z8cq8
   foo_minter:
-    _contract_address: juno1jg932mx0dgccmnzctp56eyfjxsnv9wvr4zdcvn57qsm4t7m54wnsazn8ng
-    token: juno14yay7760nvk8xseqdn9rv5nww6shq7avllzk4nlh6n2mhu77ushqsvrk3l
+    _contract_address: juno1wug8sewp6cedgkmrmvhl3lf3tulagm9hnvy8p0rppz9yjw0g4wtqwrw37d
+    token: juno1suhgf5svhu4usrurvxzlgn54ksxmn8gljarjtxqnapv8kjnp4nrsf8smqw
